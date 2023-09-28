@@ -19,7 +19,7 @@ import Profile from './Profile';
 import EditProfile from './EditProfile';
 import ChangePassword from './ChangePassword';
 import BookingManagement from './BookingManagement';
-import Setting from './Setting';
+import Settings from './Setting';
 import SettingTheme from './SettingTheme';
 import Filter from './Filter';
 import PickerLocation from './PickerLocation';
@@ -46,6 +46,7 @@ import Activities from './Activities';
 import TestPage from './TestPage';
 import ProductDetail2 from './ProductDetail2';
 import Routes from './Routes';
+import Setting from'./Setting'
 
 export {
   Routes,

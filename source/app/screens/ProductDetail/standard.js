@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-
+import axios from 'axios';
 import {
   FlatList,
   Linking,
@@ -47,6 +47,7 @@ import QRCode from 'react-native-qrcode-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 export default function Index({ navigation, route }) {
+  const [weatherData, setWeatherData] = useState(null);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const heightHeader = useHeaderHeight();
@@ -73,7 +74,26 @@ export default function Index({ navigation, route }) {
       }),
     );
   }, [dispatch, route.params]);
+  useEffect(() => {
 
+  }, []);
+
+  const fetchWeatherData = (apiUrl) => {
+
+    // Check if modifiedUrl is valid before making the API request
+    if (apiUrl) {
+      axios
+        .get(apiUrl)
+        .then((response) => {
+          setWeatherData(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching weather data:', error);
+        });
+    } else {
+      console.log("product?.email is null or undefined");
+    }
+  };
   /**
    * on load detail
    */
@@ -237,19 +257,53 @@ export default function Index({ navigation, route }) {
 
   const renderTitle = () => {
     if (product) {
+      const modifiedUrl = product?.website2?.replace(/&amp;/g, '&');
+      // Fetch weather data on component mount
+      fetchWeatherData(modifiedUrl);
+      // Set up interval for periodic updates (e.g., every 15 minutes)
       return (
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingTop: 10, }}>
             <Text typography="h4" weight="bold">
               {product?.title}
             </Text>
+            <View style={styles.container}>
+              {weatherData && (
+                <>
+                  {/* <Text style={styles.city}>{weatherData.name}</Text> */}
+                  <Text style={styles.temperature}>
+                    {Math.round(weatherData.main.temp - 273.15)}°C
+                    <Image
+                      source={{
+                        uri: `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`,
+                      }}
+                      style={styles.icon}
+                    />
+                  </Text>
+
+                  {/* <View styles={styles.inline}>
+                    <Text style={styles.description}>{weatherData.weather[0].description}</Text>
+                    <Text style={styles.humidity}>
+                      Humidity: {weatherData.main.humidity}%
+                    </Text>
+                    <Image
+                      source={{
+                        uri: `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`,
+                      }}
+                      style={styles.icon}
+                    />
+                  </View> */}
+                </>
+              )}
+            </View>
           </View>
+
           {/* <View style={{flexDirection: 'row',alignItems: 'center',paddingHorizontal:16,paddingBottom:10}}>
           <Text typography="h4" weight="regular" type="secondary" style={{fontFamily:'HypatiaSansPro',textAlign:'justify'}}>
                 {product?.category?.title}
           </Text>
         </View> */}
-          <SizedBox height={12} />
+
 
         </View>
       );
@@ -900,6 +954,7 @@ export default function Index({ navigation, route }) {
             )}
           </View> */}
           <View style={Styles.row}>
+
             {/* <Text
               typography="h4"
               weight="bold"
@@ -1105,7 +1160,7 @@ export default function Index({ navigation, route }) {
             {product?.email && (
               <TouchableOpacity
                 style={[Styles.row, Styles.paddingVertical8]}
-                onPress={() => onInfoAction(`mailto:${product?.email}`)}>
+              >
                 <View
                   style={[
                     styles.iconInfo,
@@ -1130,7 +1185,7 @@ export default function Index({ navigation, route }) {
             {product?.email && (
               <TouchableOpacity
                 style={[Styles.row, Styles.paddingVertical8]}
-                onPress={() => onInfoAction(`mailto:${product?.email}`)}>
+              >
                 <View
                   style={[
                     styles.iconInfo,
@@ -1155,7 +1210,7 @@ export default function Index({ navigation, route }) {
             {product?.email && (
               <TouchableOpacity
                 style={[Styles.row, Styles.paddingVertical8]}
-                onPress={() => onInfoAction(`mailto:${product?.email}`)}>
+              >
                 <View
                   style={[
                     styles.iconInfo,
@@ -1177,6 +1232,12 @@ export default function Index({ navigation, route }) {
                 </View>
               </TouchableOpacity>
             )}
+            {/* {product?.website2 && (
+              <TouchableOpacity
+                style={[Styles.row, Styles.paddingVertical8]}
+                >
+              </TouchableOpacity>
+            )} */}
             {product?.openHours?.length > 0 && (
               <>
                 {/* <TouchableOpacity
@@ -1218,6 +1279,7 @@ export default function Index({ navigation, route }) {
           <Text typography="subtitle" style={styles.description}>
             {product?.description.replace(/<\/?[^>]+(>|$)/g, "")}
           </Text>
+
           <View style={{ bottom: 0, width: 150, marginLeft: 'auto', marginRight: 'auto', paddingTop: 30 }}>
             <Button onPress={showRoute}>Εκκίνηση</Button>
           </View>
@@ -1667,6 +1729,7 @@ export default function Index({ navigation, route }) {
   /**
    * render action menu
    */
+
   const renderHeaderAction = () => {
     if (product) {
       let modelAction;

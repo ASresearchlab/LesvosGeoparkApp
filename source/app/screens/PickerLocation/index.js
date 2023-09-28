@@ -17,150 +17,21 @@ export default function Index({navigation, route}) {
   const defaultDelta = {latitudeDelta: 0.0922, longitudeDelta: 0.0421};
   const [location, setLocation] = useState(item);
 
+  customStyle = [
+    { "elementType": "labels.text.fill", "stylers": [{ "color": "#3c4646" }] },
+    { "featureType": "landscape.man_made", "elementType": "geometry", "stylers": [{ "color": "#e6d2b4" }] },
+    { "featureType": "landscape.natural", "elementType": "geometry", "stylers": [{ "color": "#8db580" }] },
+    { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [{ "color": "#a0aaa0" }] },
+    { "featureType": "road", "elementType": "geometry", "stylers": [{ "color": "#fff8ef" }] },
+    { "featureType": "road.highway", "elementType": "geometry.fill", "stylers": [{ "color": "#fff8ef" }] },
+    { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [{ "color": "#d2aa78" }, { "weight": 3.5 }] },
+    { "featureType": "poi.park", "elementType": "labels", "stylers": [{ "visibility": "off" }] },
+    // ... More styling rules for various map features
+  ]
   /**
    * on current location
    */
   const onCurrentLocation = async () => {
-    customStyle = [
-      {
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#3c4646"
-          }
-        ]
-      },
-      {
-        "featureType": "landscape.man_made",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#e6d2b4"
-          }
-        ]
-      },
-      {
-        "featureType": "landscape.natural",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#8db580"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#a0aaa0"
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#fff8ef"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#fff8ef"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#d2aa78"
-          },
-          {
-            "weight": 3.5
-          },
-
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "labels",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.attraction",
-        "elementType": "labels",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.business",
-        "elementType": "labels",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.government",
-        "elementType": "labels",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.medical",
-        "elementType": "labels",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.place_of_worship",
-        "elementType": "labels",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.school",
-        "elementType": "labels",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.sports_complex",
-        "elementType": "labels",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      }
-    ]
     const result = await getCurrentLocation();
     if (result) {
       mapRef.current?.animateToRegion({...result, ...defaultDelta}, 500);

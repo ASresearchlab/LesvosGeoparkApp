@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React, { useContext, useRef } from 'react';
 import {
   Application,
   BottomSheetPicker,
@@ -12,11 +12,11 @@ import {
   TextInput,
   Toast,
 } from '@components';
-import {Setting, Styles} from '@configs';
-import {useTranslation} from 'react-i18next';
-import {ScrollView, View} from 'react-native';
+import { Setting, Styles } from '@configs';
+import { useTranslation } from 'react-i18next';
+import { ScrollView, View } from 'react-native';
 import styles from './styles';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   domainSelect,
   fontSelect,
@@ -24,13 +24,13 @@ import {
   languageSelect,
   listingStyleSelect,
 } from '@selectors';
-import {getNational, getTitleDarkMode, handleRTL} from '@utils';
-import {applicationActions} from '@actions';
+import { getNational, getTitleDarkMode, handleRTL } from '@utils';
+import { applicationActions } from '@actions';
 import Navigator from '@navigator';
 
-export default function Index({navigation}) {
-  const {t} = useTranslation();
-  const {theme} = useContext(Application);
+export default function Index({ navigation }) {
+  const { t } = useTranslation();
+  const { theme } = useContext(Application);
   const dispatch = useDispatch();
   const languageRef = useRef();
   const darkModeRef = useRef();
@@ -87,7 +87,7 @@ export default function Index({navigation}) {
       dispatch(
         applicationActions.changeDomain(
           domainRef.current ?? domainStorage,
-          ({success, message}) => {
+          ({ success, message }) => {
             if (success) {
               Navigator.popToTop();
               Navigator.navigate('Splash');
@@ -106,7 +106,7 @@ export default function Index({navigation}) {
   const onChangeListingStyle = item => {
     dispatch(applicationActions.changeListingStyle(item.value));
     dispatch(
-      applicationActions.changeDomain(item.domain, ({success, message}) => {
+      applicationActions.changeDomain(item.domain, ({ success, message }) => {
         if (success) {
           Navigator.popToTop();
           Navigator.navigate('Splash');
@@ -161,7 +161,7 @@ export default function Index({navigation}) {
   };
 
   const listingStyle = [
-    {title: t('basic'), value: 'basic', domain: Setting.domain},
+    { title: t('basic'), value: 'basic', domain: Setting.domain },
     {
       title: t('real_estate'),
       value: 'real_estate',
@@ -194,9 +194,9 @@ export default function Index({navigation}) {
           value: getTitleDarkMode(darkModeStorage),
         }}
         data={[
-          {title: t('auto_system'), value: 'auto_system', data: null},
-          {title: t('on'), value: 'on', data: true},
-          {title: t('off'), value: 'off', data: false},
+          { title: t('auto_system'), value: 'auto_system', data: null },
+          { title: t('on'), value: 'on', data: true },
+          { title: t('off'), value: 'off', data: false },
         ]}
       />
       <BottomSheetPicker
@@ -213,7 +213,7 @@ export default function Index({navigation}) {
         ref={fontRef}
         title={t('font')}
         onSelect={onChangeFont}
-        selected={{title: fontStorage, value: fontStorage}}
+        selected={{ title: fontStorage, value: fontStorage }}
         data={Setting.fontSupport.map(item => {
           return {
             title: item,
@@ -226,8 +226,9 @@ export default function Index({navigation}) {
           style={[
             Styles.flex,
             styles.container,
-            {backgroundColor: theme.colors.card},
+            { backgroundColor: theme.colors.card },
           ]}>
+          <Divider />
           <ListItem
             title={t('language')}
             trailing={
@@ -244,7 +245,7 @@ export default function Index({navigation}) {
             onPress={() => languageRef.current?.present()}
           />
           <Divider />
-          <ListItem
+          {/* <ListItem
             title={t('theme')}
             trailing={
               <View style={Styles.row}>
@@ -260,9 +261,9 @@ export default function Index({navigation}) {
               </View>
             }
             onPress={onChangeTheme}
-          />
-          <Divider />
-          <ListItem
+          /> */}
+          {/* <Divider />
+           <ListItem
             title={t('dark_mode')}
             trailing={
               <View style={Styles.row}>
@@ -274,7 +275,8 @@ export default function Index({navigation}) {
             }
             onPress={() => darkModeRef.current?.present()}
           />
-          <Divider />
+          <Divider /> */}
+          {/*
           <ListItem
             title={t('font')}
             trailing={
@@ -314,9 +316,9 @@ export default function Index({navigation}) {
                 onPress={() => listingStyleRef.current?.present()}
               />
             </>
-          )}
-          <Divider />
-          <ListItem
+          )} */}
+          {/* <Divider /> */}
+          {/* <ListItem
             title={t('version')}
             trailing={
               <View style={Styles.row}>
@@ -324,7 +326,7 @@ export default function Index({navigation}) {
                 <Icon name="chevron-right" />
               </View>
             }
-          />
+          /> */}
         </View>
       </ScrollView>
     </ScreenContainer>

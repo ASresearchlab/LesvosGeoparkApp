@@ -1,6 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
+import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { WebView } from 'react-native-webview';
 import {
   Application,
   Empty,
@@ -10,6 +11,7 @@ import {
   SearchPicker,
   SizedBox,
   Text,
+  ListItem
 } from '@components';
 import {
   ActivityIndicator,
@@ -20,19 +22,19 @@ import {
   Image
 } from 'react-native';
 import styles from './styles';
-import {Styles} from '@configs';
-import {discoveryActions} from '@actions';
-import {discoverySelect} from '@selectors';
-import {convertIcon} from '@utils';
+import { Styles } from '@configs';
+import { discoveryActions } from '@actions';
+import { discoverySelect } from '@selectors';
+import { convertIcon } from '@utils';
 
-export default function Discovery({navigation}) {
-  const {theme} = useContext(Application);
-  const {t} = useTranslation();
+export default function Discovery({ navigation }) {
+  const { theme } = useContext(Application);
+  const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
   const [ready, setReady] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(discoverySelect);
-
+  const [url, setUrl] = useState('https://www.lesvosmuseum.gr/e-shop/tickets');
   useEffect(() => {
     setTimeout(() => setReady(true), 1);
   }, []);
@@ -67,16 +69,16 @@ export default function Discovery({navigation}) {
    * on press category
    */
   const onPressCategory = item => {
-    navigation.navigate('Listing', {item: item.category});
+    navigation.navigate('Listing', { item: item.category });
   };
   const onPressCategoryList = item => {
-    navigation.navigate('CategoryList', {item: item.category});
+    navigation.navigate('CategoryList', { item: item.category });
   };
   /**
    * on press product
    */
   const onPressProduct = item => {
-    navigation.navigate('ProductDetail', {item});
+    navigation.navigate('ProductDetail', { item });
   };
 
   /**
@@ -84,13 +86,13 @@ export default function Discovery({navigation}) {
    * @param item
    * @returns {JSX.Element}
    */
-  const renderItem = ({item}) => {
-    if (item.category.title === 'Δραστηριότητες') {
-    return (
-      <>
-        <View style={styles.item}>
-          <View style={Styles.row}>
-             {/* <View
+  const renderItem = ({ item }) => {
+    if (item.category.title === 'Δράσεις Γεωπάρκου') {
+      return (
+        <>
+          <View style={styles.item}>
+            <View style={Styles.row}>
+              {/* <View
               style={[
                 styles.iconContainer,
                 {
@@ -104,36 +106,43 @@ export default function Discovery({navigation}) {
                 type="FontAwesome5"
               />
             </View>  */}
-            <Image source={{uri: item?.category?.image?.thumb}} style={{width:40,height:40,borderRadius:10}} resizeMode='contain'/>
-            <View style={Styles.paddingHorizontal8}>
-              <Text typography="title" weight="bold">
-                {item.category?.title}
-              </Text>
-              <SizedBox height={4} />
-              {/* <Text typography="caption" type="secondary">
+              <Image source={{ uri: item?.category?.image?.thumb }} style={{ width: 40, height: 40, borderRadius: 10 }} resizeMode='contain' />
+              <View style={Styles.paddingHorizontal8}>
+                <Text typography="title" weight="bold">
+                  {item.category?.title}
+                </Text>
+                <SizedBox height={4} />
+                {/* <Text typography="caption" type="secondary">
                 {item.category?.count} {t('location')}
               </Text> */}
+              </View>
             </View>
+            <TouchableOpacity
+              style={Styles.padding4}
+              onPress={() => onPressCategoryList(item)}>
+              {/* <Text typography="caption" color="secondary">
+                {t('see_more')}
+              </Text> */}
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={Styles.padding4}
-            onPress={() => onPressCategoryList(item)}>
-            <Text typography="caption" color="secondary">
-              {t('see_more')}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          contentContainerStyle={Styles.padding8}
-          data={item.list}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          renderItem={renderProduct}
-          keyExtractor={(i, index) => `${i?.id}${index}`}
-        />
-      </>
-    );
-            }
+          <FlatList
+            contentContainerStyle={Styles.padding8}
+            data={item.list}
+            showsHorizontalScrollIndicator={false}
+            renderItem={renderProduct}
+            keyExtractor={(i, index) => `${i?.id}${index}`}
+          />
+          {/* <FlatList
+            contentContainerStyle={Styles.padding8}
+            data={item.list}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            renderItem={renderProduct}
+            keyExtractor={(i, index) => `${i?.id}${index}`}
+          /> */}
+        </>
+      );
+    }
   };
 
   /**
@@ -141,9 +150,9 @@ export default function Discovery({navigation}) {
    * @param item
    * @returns {JSX.Element}
    */
-  const renderProduct = ({item}) => {
+  const renderProduct = ({ item }) => {
     return (
-      <View style={styles.productItem}>
+      <View style={styles.productItem2}>
         <ProductItem
           item={item}
           type="thumb"
@@ -197,6 +206,19 @@ export default function Discovery({navigation}) {
         <SearchPicker onSearch={onSearch} onScan={onScan} />
       </View>
       {renderContent()}
+      {/* <View style={{ flex: 1.5}}>
+        <View style={{ flex: 1}}>
+          <WebView
+            source={{ uri: url }}
+            style={{ flex: 1 }}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+          />
+         
+        </View>
+      </View> */}
     </ScreenContainer>
   );
 }
+{/* <Button title={`\u00AB ${'Επιστροφη'}`} onPress={closeWebView} /> */ }
+{/* <Button title='Επιστροφη' /> */ }

@@ -17,7 +17,7 @@ export default function Index({navigation, route}) {
   const listRef = useRef();
   const galleryRef = useRef();
 
-  const [indexSelected, setIndexSelected] = useState(0);
+  const [indexSelected, setIndexSelected] = useState(1);
 
   const product = route.params?.item;
 
@@ -37,7 +37,7 @@ export default function Index({navigation, route}) {
    * @param value
    */
   const onChange = value => {
-    setIndexSelected(value);
+    setIndexSelected(value+1);
     listRef.current?.scrollToIndex({
       animated: true,
       index: value,

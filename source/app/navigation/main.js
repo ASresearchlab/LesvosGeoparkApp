@@ -3,9 +3,9 @@ import {Linking, Pressable, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import messaging from '@react-native-firebase/messaging';
 import {useTranslation} from 'react-i18next';
-import {Account, CategoryList, Discovery, Empty, Home, WishList,Listing, Feedback, Geopark, Visit,Activities, TestPage, Routes} from '@screens';
+import {Account, CategoryList, Discovery, Empty, Home, WishList,Listing, Feedback, Geopark, Visit,Activities, TestPage, Routes, Setting} from '@screens';
 import {Application, getFontFamily, Icon, Text} from '@components';
-import {Setting, Styles} from '@configs';
+import {Styles} from '@configs';
 import Navigator from '@navigator';
 import {useSelector} from 'react-redux';
 import {settingSelect} from '@selectors';
@@ -101,7 +101,7 @@ export default function Main() {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Geopark"
         component={Geopark}
         options={{
@@ -123,11 +123,13 @@ export default function Main() {
             <Icon color={color} name="bank" />
           ),
         }}
-      />
+      /> */}
 <Tab.Screen
-        name="Discovery"
+        name={t('interests_points')}
         component={Discovery}
         options={{
+          headerShown:true,
+          headerTitleAlign: 'center',
           tabBarLabel: ({ focused }) => (
             <Text
               numberOfLines={2} // Set the number of lines to allow wrapping
@@ -143,18 +145,23 @@ export default function Main() {
         }}
       />
       <Tab.Screen
-        name="Activities"
+        name={t('activities')}
         component={Activities}
         options={{
-          headerShown: true,
+          headerShown:true,
           headerTitleAlign: 'center',
-          title: t('activities'),
-          tabBarIcon: ({color}) => {
-            return <Icon color={color} name="gauge" />;
-          },
-          // tabBarButton: props => (
-          //   <Pressable {...props} onPress={() => onAuthNavigate('WishList')} />
-          // ),
+          tabBarLabel: ({ focused }) => (
+            <Text
+              numberOfLines={2} // Set the number of lines to allow wrapping
+              style={{ textAlign: 'center',fontSize: 10,
+              fontFamily: getFontFamily({fontFamily: font}),marginBottom:-1,  }}
+            >
+              {focused ? t('activities') : t('activities')}
+            </Text>
+          ),
+          tabBarIcon: ({ color }) => (
+            <Icon color={color} name="gauge" />
+          ),
         }}
       />
       <Tab.Screen
@@ -278,21 +285,21 @@ export default function Main() {
 
 
 
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Settings"
         component={Setting}
         options={{
           headerShown: true,
           headerTitleAlign: 'center',
-          title: t('account'),
+          title: t('language'),
           tabBarIcon: ({color}) => {
-            return <Icon color={color} name="account-outline" />;
+            return <Icon color={color} name="web" />;
           },
-          tabBarButton: props => (
-            <Pressable {...props} onPress={() => onAuthNavigate('Account')} />
-          ),
+          // tabBarButton: props => (
+          //   <Pressable {...props} onPress={() => onAuthNavigate('Account')} />
+          // ),
         }}
-      /> */}
+      />
     </Tab.Navigator>
     
   );

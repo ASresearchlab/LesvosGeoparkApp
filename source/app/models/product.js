@@ -28,6 +28,7 @@ export default class ProductModel {
     this.fax = data.fax;
     this.email = data.email;
     this.website = data.website;
+    this.website2 = data.website2;
     this.description = data.description;
     this.color = data.color;
     this.icon = data.icon;
@@ -66,6 +67,7 @@ export default class ProductModel {
       let phone = '';
       let email = '';
       let website = '';
+      let website2 = '';
       let tags = [];
       let priceMin = '';
       let priceMax = '';
@@ -96,6 +98,9 @@ export default class ProductModel {
       }
       if (setting?.useViewWebsite === true) {
         website = json.website ?? '';
+      }
+      if (setting?.useViewWebsite === true) {
+        website2 = json.website2 ?? '';
       }
       if (setting?.useViewTags === true) {
         tags = (json.tags ?? []).map(item => {
@@ -165,6 +170,7 @@ export default class ProductModel {
         fax: json.fax ?? '',
         email,
         website,
+        website2,
         description: json.post_content ?? '',
         color: json.color ?? '',
         icon: json.icon ?? '',

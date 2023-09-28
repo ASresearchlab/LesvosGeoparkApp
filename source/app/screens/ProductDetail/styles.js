@@ -127,6 +127,27 @@ export default StyleSheet.create({
   inline: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight:20
+    // paddingRight:20
+  },
+
+  container: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  city: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  temperature: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 16,
+  },
+  icon: {
+    width: 50,
+    height: 50,
   },
 });

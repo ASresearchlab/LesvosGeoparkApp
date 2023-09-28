@@ -22,4 +22,5 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   productItem: {width: 130, height: 160, paddingHorizontal: 8},
+  productItem2: {width: '100%', height: 160, paddingHorizontal: 8, padding:4},
 });

@@ -100,7 +100,7 @@ export default function Home({ navigation }) {
   };
 
   const actionStyle = useAnimatedStyle(() => {
-    const minHeight = insets.top + 60;
+    const minHeight = insets.top;
     const height = withTiming(
       interpolate(
         translationY.value,
@@ -110,7 +110,7 @@ export default function Home({ navigation }) {
       { duration: 0 },
     );
     return {
-      height,
+      height: height,
       position: 'absolute',
       backgroundColor: theme.colors.background,
       zIndex: 1,
@@ -131,11 +131,11 @@ export default function Home({ navigation }) {
         />
         <SizedBox height={28} />
         <SafeAreaView edges={['left', 'right']} mode="margin">
-          <SearchPicker
+          {/* <SearchPicker
             style={styles.searchContainer}
             onSearch={onSearch}
             onScan={onScan}
-          />
+          /> */}
         </SafeAreaView>
       </Animated.View>
       <Animated.ScrollView
@@ -156,17 +156,34 @@ export default function Home({ navigation }) {
         <SafeAreaView edges={['left', 'right']} mode="margin">
           <SizedBox height={bannerHeight} />
           <SizedBox height={12} />
-          <Categories
+          <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 20
+          }}>
+            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'gray', textAlign: 'center', marginTop: -35 }}>{t('Γεωπάρκο Λέσβου')}</Text>
+            <Image source={Images.logo} resizeMode='contain' style={{ width: '50%', height: 80, marginTop: 30, marginBottom: 0, marginLeft: 0 }} />
+            <Text style={{ fontSize: 14, fontWeight: 'normal', color: 'gray', textAlign: 'justify', marginTop: 20 }}>{t('Η Λέσβος διαθέτει μοναδικό πλούτο γεωλογικών μνημείων και τοπίων φυσικού κάλλους, οικοτόπων και πολιτιστικών μνημείων τα οποία συνέβαλαν στην αναγνώριση και ένταξή της στο Παγκόσμιο Δίκτυο Γεωπάρκων της UNESCO.\n\nΓνωρίστε σημαντικές θέσεις που περιλαμβάνονται στο Γεωπάρκο της Λέσβου, όπως γεώτοπους, οικότοπους, μνημεία και μουσεία, ενημερωθείτε για μια σειρά δράσεων που λαμβάνουν χώρα στο Γεωπάρκο ή επιλέξτε συγκεκριμένη διαδρομή και περιηγηθείτε στο Γεωπάρκο Λέσβου.')}
+            
+            </Text>
+            <Text style={{ fontSize: 14, fontWeight: 'bold', color: 'black', textAlign: 'center', marginTop: 20, marginRight:'auto' }}>{t('interests_points')}</Text>
+          </View>
+          {/* <Categories
             data={home?.category}
             onPress={onCategory}
             onCategoryList={onCategoryList}
-          />
-          <Image source={Images.logo} resizeMode='contain' style={{ width: '100%', height: 70, marginTop: 30, marginBottom: 0, marginLeft: 0 }} />
+          /> */}
+          <Locations data={home?.top10posts} onPress={onPressProduct} />
+          <View style={{ flexDirection: 'row' }}>
+            <Image source={Images.espa} resizeMode='contain' style={{ width: '100%', height: 120, marginTop: 30, marginBottom: 0, marginLeft: 0 }} />
+          </View>
+
           <SizedBox height={20} />
           <View>
             <SizedBox height={12} />
             {/* <Locations data={home?.location} onPress={onCategory} /> */}
-            <Locations data={home?.recent} onPress={onPressProduct} />
+
             {/* <Recent data={home?.recent} onPress={onPressProduct} /> */}
             <SizedBox height={12} />
 

@@ -2,8 +2,7 @@ import {all, call, put, select, takeEvery} from 'redux-saga/effects';
 import {actionTypes} from '@actions';
 import api from '@api';
 import {CategoryModel, ProductModel} from '@models';
-import {homeSelect, settingSelect,languageSelect} from '@selectors';
-
+import {homeSelect, settingSelect} from '@selectors';
 /**
  * on handle load home
  * @param action
@@ -11,24 +10,32 @@ import {homeSelect, settingSelect,languageSelect} from '@selectors';
  */
 function* onLoad(action) {
   try {
-    const setting = yield select(settingSelect);    
+    const setting = yield select(settingSelect);
     const response = yield call(api.getHome);
-    if (response.success) {
+    const params = {category: [132]};
+    const top10 = yield call(api.getListing, {
+      ...params,
+    });
+    if (response.success && top10.success) {
       const banner = response.data?.sliders ?? [];
       const category = (response.data?.categories ?? []).map(item => {
         return CategoryModel.fromJson(item);
       });
-      const location = (response.data?.locations ?? []).map(item => {
-        return CategoryModel.fromJson(item);
-      });
+      // const location = (response.data?.locations ?? []).map(item => {
+      //   return CategoryModel.fromJson(item);
+      // });
       const recent = (response.data?.recent_posts ?? []).map(item => {
+        return ProductModel.fromJson({json: item, setting});
+      });
+      const top10posts = top10.data.map(item => {
         return ProductModel.fromJson({json: item, setting});
       });
       const home = {
         banner,
         category,
-        location,
+        //location,
         recent,
+        top10posts,
       };
       yield put({type: actionTypes.SAVE_HOME, home});
     }
@@ -43,7 +50,6 @@ function* onLoad(action) {
     });
   }
 }
-
 /**
  * on handle add review
  * @param action
@@ -65,15 +71,12 @@ function* onAddReview(action) {
     });
   }
 }
-
 function* watchLoad() {
   yield takeEvery(actionTypes.LOAD_HOME, onLoad);
 }
-
 function* watchReview() {
   yield takeEvery(actionTypes.ADD_REVIEW, onAddReview);
 }
-
 export default function* homeSagas() {
   yield all([watchLoad(), watchReview()]);
 }

@@ -123,14 +123,21 @@ export default function Discovery({navigation}) {
             </Text>
           </TouchableOpacity>
         </View>
-        <FlatList
+        {/* <FlatList
           contentContainerStyle={Styles.padding8}
           data={item.list}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={renderProduct}
           keyExtractor={(i, index) => `${i?.id}${index}`}
-        />
+        /> */}
+        <FlatList
+            contentContainerStyle={Styles.padding8}
+            data={item.list}
+            showsHorizontalScrollIndicator={false}
+            renderItem={renderProduct}
+            keyExtractor={(i, index) => `${i?.id}${index}`}
+          />
       </>
     );
             }
@@ -143,7 +150,7 @@ export default function Discovery({navigation}) {
    */
   const renderProduct = ({item}) => {
     return (
-      <View style={styles.productItem}>
+      <View style={styles.productItem2}>
         <ProductItem
           item={item}
           type="thumb"

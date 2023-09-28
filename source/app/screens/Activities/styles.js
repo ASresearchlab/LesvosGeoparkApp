@@ -22,4 +22,18 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   productItem: {width: 130, height: 160, paddingHorizontal: 8},
+  productItem2: {width: '100%', height: 160, paddingHorizontal: 8, padding:4},
+  gridItem: {
+    flex: 1,
+    margin: 8,
+    borderRadius: 8,
+    backgroundColor: 'white',
+    elevation: 3, // Add elevation for a shadow effect
+    padding: 8,
+  },
+
+  gridContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

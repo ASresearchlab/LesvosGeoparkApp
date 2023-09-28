@@ -85,7 +85,7 @@ export default function Discovery({navigation}) {
    * @returns {JSX.Element}
    */
   const renderItem = ({item}) => {
-    if (item.category.title !== 'Γεωπάρκο της Λέσβου' && item.category.title !== 'Επίσκεψη' && item.category.title !== 'Δραστηριότητες' && item.category.title !== 'Διαδρομές' ) {
+    if (item.category.title !== 'Γεωπάρκο της Λέσβου' && item.category.title !== 'Επίσκεψη '&& item.category.title !== 'Επίσκεψη' && item.category.title !== 'Δράσεις Γεωπάρκου' && item.category.title !== 'Διαδρομές'&& item.category.title !== 'top10' ) {
     return (
       <>
         <View style={styles.item}>
@@ -194,7 +194,7 @@ export default function Discovery({navigation}) {
   return (
     <ScreenContainer navigation={navigation} edges={['left', 'right', 'top']}>
       <View style={styles.searchContainer}>
-        <SearchPicker onSearch={onSearch} onScan={onScan} />
+        {/* <SearchPicker onSearch={onSearch} onScan={onScan} /> */}
       </View>
       {renderContent()}
     </ScreenContainer>
