@@ -37,7 +37,7 @@ class HTTP {
         if (!config.baseURL) {
           config.baseURL = `${getDomain()}/index.php/wp-json`;
         }
-        console.log('Before Request >>>', config);
+        //console.log('Before Request >>>', config);
         // Add more config before request
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
@@ -52,7 +52,7 @@ class HTTP {
         return config;
       },
       error => {
-        console.log('Error Request >>>', error);
+        //console.log('Error Request >>>', error);
         // Do something with response error
         return new Promise.reject(error);
       },
@@ -60,12 +60,12 @@ class HTTP {
 
     api.interceptors.response.use(
       response => {
-        console.log('After Request >>>', response);
+       // console.log('After Request >>>', response);
         // process more after response
         return response;
       },
       error => {
-        console.log('Error Response >>>', error);
+       // console.log('Error Response >>>', error);
         // process more when exception
         const code = error.response?.data?.code;
         const message = error.response?.data?.message;
@@ -169,7 +169,7 @@ class HTTP {
         progressInterval: 5,
         progressDivider: 1,
         begin: event => {
-          console.log('begin download', event);
+         // console.log('begin download', event);
         },
         progress: event => {
           const percent = (event.bytesWritten / event.contentLength) * 100;

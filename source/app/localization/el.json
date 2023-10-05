@@ -98,8 +98,8 @@
   "orange": "Πορτοκάλι",
   "not_is_domain": "Ελέγξτε ξανά το όνομα τομέα",
   "please_try_again": "Παρακαλώ ξαναελέγξτε",
-  "post_date_desc": "Τελευταία ανάρτηση",
-  "post_date_asc": "Παλαιότερη ανάρτηση",
+  "post_date_desc": "Ω-Α",
+  "post_date_asc": "Α-Ω",
   "post_title_desc": "Περιγραφή Τίτλος",
   "post_title_asc": "Τίτλος Asc",
   "post_status_completed": "Ολοκληρώθηκε το",
@@ -315,7 +315,9 @@
   "Video":"Βίντεο",
   "3D Model":"3D Απεικόνιση",
   "routes": "Διαδρομές",
-  "interests_points": "Θέσεις Ενδιαφέροντος"
+  "route": "Διαδρομή",
+  "interests_points": "Θέσεις Ενδιαφέροντος",
+  "placetovisit":"μέρη για να επισκεφθείτε"
   
   
 }

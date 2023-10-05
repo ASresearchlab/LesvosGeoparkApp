@@ -73,4 +73,28 @@ export default StyleSheet.create({
     zIndex: 999,
     textAlign: 'center',
   },
+  container: {
+    flex: 1,
+  },
+  item: {
+    backgroundColor: 'lightgray',
+    borderRadius: 5,
+    height: 200,
+    padding: 20,
+    marginLeft: 25,
+    marginRight: 25,
+  },
+  paginationContainer: {
+    marginTop: -20,
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 8,
+    backgroundColor: 'blue',
+  },
+  paginationInactiveDot: {
+    backgroundColor: 'gray',
+  },
 });

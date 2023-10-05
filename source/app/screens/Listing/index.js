@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import MapView, {Marker, PROVIDER_GOOGLE,Geojson} from 'react-native-maps';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import MapView, { Marker, PROVIDER_GOOGLE, Geojson } from 'react-native-maps';
 import {
   FlatList,
   RefreshControl,
@@ -21,42 +21,42 @@ import {
   ProductItem,
   ScreenContainer,
 } from '@components';
-import {Styles} from '@configs';
-import {listingActions} from '@actions';
+import { Styles } from '@configs';
+import { listingActions } from '@actions';
 import Action from './components/action';
 import styles from './styles';
-import {useDispatch, useSelector} from 'react-redux';
-import {listingSelect, settingSelect} from '@selectors';
-import {FilterModel} from '@models';
+import { useDispatch, useSelector } from 'react-redux';
+import { listingSelect, settingSelect } from '@selectors';
+import { FilterModel } from '@models';
 import Carousel from 'react-native-snap-carousel';
-import {enableExperimental, getCurrentLocation} from '@utils';
+import { enableExperimental, getCurrentLocation } from '@utils';
 import { init } from 'i18next';
 
-export default function Index({navigation, route}) {
-  const {t} = useTranslation();
-  const {theme} = useContext(Application);
-  const {width} = useWindowDimensions();
+export default function Index({ navigation, route }) {
+  const { t } = useTranslation();
+  const { theme } = useContext(Application);
+  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const listing = useSelector(listingSelect);
   const setting = useSelector(settingSelect);
   const listRef = useRef();
-  //const sortRef = useRef();
+  const sortRef = useRef();
   const mapRef = useRef();
   const sliderRef = useRef();
   const filter = useRef(FilterModel.fromSettings(setting)).current;
-  const defaultDelta = {latitudeDelta: 0.0922, longitudeDelta: 0.0421};
+  const defaultDelta = { latitudeDelta: 0.0922, longitudeDelta: 0.0421 };
 
   const [refreshing, setRefreshing] = useState(false);
   const [pageStyle, setPageStyle] = useState('listing');
   const [modeView, setModeView] = useState('grid');
-  //const [sort, setSort] = useState(filter.sort);
+  const [sort, setSort] = useState(filter.sort);
 
   useEffect(() => {
-    
+
     if (route.params?.item) {
       filter.setCategory = route.params?.item;
     }
-    dispatch(listingActions.onLoad({filter}));
+    dispatch(listingActions.onLoad({ filter }));
     return () => dispatch(listingActions.onReset());
   }, [dispatch, filter, route.params]);
 
@@ -66,7 +66,7 @@ export default function Index({navigation, route}) {
   const onRefresh = async () => {
     setRefreshing(true);
     dispatch(
-      listingActions.onLoad({filter}, () => {
+      listingActions.onLoad({ filter }, () => {
         setRefreshing(false);
       }),
     );
@@ -78,7 +78,7 @@ export default function Index({navigation, route}) {
   const onCurrentLocation = async () => {
     const result = await getCurrentLocation();
     if (result) {
-      mapRef.current?.animateToRegion({...result, ...defaultDelta}, 500);
+      mapRef.current?.animateToRegion({ ...result, ...defaultDelta }, 500);
     }
   };
 
@@ -112,7 +112,7 @@ export default function Index({navigation, route}) {
    * on change sort
    * @param item
    */
-  
+
 
   /**
    * on filter
@@ -121,8 +121,8 @@ export default function Index({navigation, route}) {
     navigation.navigate('Filter', {
       filter,
       onApply: () => {
-        listRef.current?.scrollToOffset({offset: 0, animated: true});
-        dispatch(listingActions.onLoad({filter, loading: true}));
+        listRef.current?.scrollToOffset({ offset: 0, animated: true });
+        dispatch(listingActions.onLoad({ filter, loading: true }));
       },
     });
   };
@@ -131,7 +131,7 @@ export default function Index({navigation, route}) {
    * on press product
    */
   const onPressProduct = item => {
-    navigation.navigate('ProductDetail', {item});
+    navigation.navigate('ProductDetail', { item });
   };
 
   /**
@@ -148,7 +148,7 @@ export default function Index({navigation, route}) {
    * @param item
    * @returns {JSX.Element}
    */
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     switch (modeView) {
       case 'block':
         return (
@@ -183,7 +183,13 @@ export default function Index({navigation, route}) {
         );
     }
   };
-
+  const onChangeSort = item => {
+    listRef.current?.scrollToOffset({ offset: 0, animated: true });
+    filter.update({ sort: item });
+    sortRef.current?.dismiss();
+    setSort(item);
+    dispatch(listingActions.onLoad({ filter, loading: true }));
+  };
   /**
    * render data listing
    * @type {unknown}
@@ -195,7 +201,7 @@ export default function Index({navigation, route}) {
       }
       return listing.data;
     } else {
-      return Array.from({length: 10}, () => {
+      return Array.from({ length: 10 }, () => {
         return {};
       });
     }
@@ -206,38 +212,66 @@ export default function Index({navigation, route}) {
    * @returns {JSX.Element}
    */
   const renderSelectSort = () => {
-
-  }
+    return (
+      <BottomSheetView ref={sortRef}>
+        <View style={styles.bottomSheetContainer}>
+          {setting.sort.map?.((item, index) => {
+            let trailing;
+            if (item.field === sort.field && item.value === sort.value) {
+              trailing = (
+                <Icon
+                  name="check"
+                  style={Styles.paddingHorizontal16}
+                  color={theme.colors.primary}
+                />
+              );
+            }
+            return (
+              <View key={`${item?.field}-${item?.value}`}>
+                <ListItem
+                  title={t(item?.title)}
+                  trailing={trailing}
+                  onPress={() => onChangeSort(item)}
+                />
+                {index < setting.sort.length - 1 && <Divider />}
+              </View>
+            );
+          })}
+        </View>
+      </BottomSheetView>
+    );
+  };
 
   /**
    * render content
    * @returns {JSX.Element}
    */
   const renderContent = () => {
-   
-   
+
+
     if (pageStyle === 'map') {
-      const geo= 'https://www.discoveramari.gr/wp-content/diadromes/Tracks.json'
-      
+      const geo = 'https://www.discoveramari.gr/wp-content/diadromes/Tracks.json'
+
       const initLocation = listing.data?.[0]?.location;
-     console.log(initLocation)
+      console.log(initLocation)
       return (
         <>
           <MapView
-          onMapReady={() => {                
-            PermissionsAndroid.request(
-              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-            ).then(granted => {
-              console.log("test",granted) // just to ensure that permissions were granted
-            },reason=> {console.log(reason)
-            })      ;
-          }}        
-                      
+            onMapReady={() => {
+              PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+              ).then(granted => {
+                console.log("test", granted) // just to ensure that permissions were granted
+              }, reason => {
+                console.log(reason)
+              });
+            }}
+
             ref={mapRef}
             style={Styles.flex}
             provider={PROVIDER_GOOGLE}
-            showsUserLocation={true}   
-            zoomControlEnabled={true}       
+            showsUserLocation={true}
+            zoomControlEnabled={true}
             initialRegion={{
               latitude: 35.246374,
               longitude: 24.570199,
@@ -250,11 +284,11 @@ export default function Index({navigation, route}) {
                 fillColor="green"
                 strokeWidth={4}
             />    */}
-            {listing.data?.map?.((item,index) => { 
-              return <Marker onPress={ () =>{ ;sliderRef.current.snapToItem(index);} } key={item?.id} coordinate={item.location}>
-                 <Image source={{uri: listing.data[1]?.category?.iconcategory}} style={{width:50,height:50}} resizeMode='contain' key="maps"/>
+            {listing.data?.map?.((item, index) => {
+              return <Marker onPress={() => { ; sliderRef.current.snapToItem(index); }} key={item?.id} coordinate={item.location} pinColor='orange'>
+                {/* <Image source={{uri: listing.data[1]?.category?.iconcategory}} style={{width:50,height:50}} resizeMode='contain' key="maps"/> */}
               </Marker>;
-            })}            
+            })}
           </MapView>
           <View style={styles.carouselContent}>
             <TouchableOpacity
@@ -271,7 +305,7 @@ export default function Index({navigation, route}) {
             <Carousel
               ref={sliderRef}
               data={listing.data ?? []}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return (
                   <View
                     key={`${item?.id}${index}${modeView}`}
@@ -290,13 +324,13 @@ export default function Index({navigation, route}) {
                   </View>
                 );
               }}
-              
+
               sliderWidth={width}
               itemWidth={width}
               onSnapToItem={index => {
                 const item = listing.data[index];
                 mapRef.current?.animateToRegion(
-                  {...item.location, ...defaultDelta},
+                  { ...item.location, ...defaultDelta },
                   500,
                 );
               }}
@@ -326,7 +360,7 @@ export default function Index({navigation, route}) {
             style={Styles.flex}
             title={t('not_found_matching')}
             message={t('please_try_again')}
-            button={{title: t('try_again'), onPress: onRefresh}}
+            button={{ title: t('try_again'), onPress: onRefresh }}
           />
         }
         data={data}
@@ -338,7 +372,7 @@ export default function Index({navigation, route}) {
         style={Styles.flex}
         contentContainerStyle={[
           styles.listContainer,
-          {backgroundColor: theme.colors.card},
+          { backgroundColor: theme.colors.card },
           modeView === 'grid' && Styles.paddingHorizontal8,
         ]}
       />
@@ -348,12 +382,12 @@ export default function Index({navigation, route}) {
     <ScreenContainer
       edges={['left', 'right', 'bottom']}
       navigation={navigation}
-      options={{        
-        headerRight: () => {          
+      options={{
+        headerRight: () => {
           return (
             <View style={Styles.nativeRightButton}>
               <IconButton onPress={onChangePageStyle} size="small">
-                <Icon
+                <Icon style={{marginRight:15}}
                   name={
                     pageStyle === 'map' ? 'view-list-outline' : 'map-legend'
                   }
@@ -361,19 +395,19 @@ export default function Index({navigation, route}) {
               </IconButton>
             </View>
           );
-        },title:route.params?.item?.title
+        }, title: route.params?.item?.title
       }}>
       <View style={Styles.flex}>
-        
-        {pageStyle=='listing' &&
-        <Action
-          style={{backgroundColor: theme.colors.card}}
-          //sort={sort}
-          modeView={modeView}
-          onView={onChangeViewStyle}
-          //onSort={sortRef.current?.present}
-          onFilter={onFilter}
-        />
+        {renderSelectSort()}
+        {pageStyle == 'listing' &&
+          <Action
+            style={{ backgroundColor: theme.colors.card }}
+            sort={sort}
+            modeView={modeView}
+            onView={onChangeViewStyle}
+            onSort={sortRef.current?.present}
+            onFilter={onFilter}
+          />
         }
         {renderContent()}
       </View>

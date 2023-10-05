@@ -32,9 +32,9 @@ export default StyleSheet.create({
   title: {
     width:200,
     borderRadius: 5,
-    backgroundColor:'#065535',
+    backgroundColor:'#e95c00',
     color: 'white',
-    padding: 1,
+    padding: 10,
     flexWrap: 'wrap',
     alignItems:'stretch',
     textAlign:'center',

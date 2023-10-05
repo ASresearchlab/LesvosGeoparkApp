@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   large: {
@@ -20,13 +20,14 @@ export default StyleSheet.create({
     minWidth: 80,
   },
   small: {
-    height: 28,
-    borderRadius: 6,
+    height: 50,
+    borderTopRightRadius: 10, // Apply border radius to the top-left corner
+    borderBottomRightRadius: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 8,
-    minWidth: 60,
+    minWidth: 40,
   },
   leading: {
     overflow: 'hidden',

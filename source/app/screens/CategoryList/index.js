@@ -33,9 +33,7 @@ export default function Index({navigation, route}) {
     dispatch(
       categoryActions.onLoad(route.params?.item, '', ({success, data}) => {
         if (success) {
-          setData(data);
-          console.log("teeeeeeseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-          console.log(data);
+          setData(data);        
         }
       }),
     );

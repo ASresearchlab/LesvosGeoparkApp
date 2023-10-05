@@ -68,7 +68,7 @@ export default function App() {
                 {...props}
                 typography="h4"
                 weight="bold"
-                style={{color: props.tintColor}}
+                style={{color: props.tintColor,width:290}}
               />
             );
           },

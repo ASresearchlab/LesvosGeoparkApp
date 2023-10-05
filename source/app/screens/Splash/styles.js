@@ -8,6 +8,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:'#c0c9bd'
   },
   contentLogo: {
     flex: 1,
@@ -26,10 +27,10 @@ export default StyleSheet.create({
   logo: {
     width: windowWidth * 0.6, // Responsive width
     height: windowHeight * 0.1, // Responsive height
-    marginBottom: windowHeight * 0.2,
+    // marginBottom: windowHeight * 0.2,
   },
   contentLogo2: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255,255,255,0.5)",
     padding: windowWidth * 0, // Responsive padding
     alignItems: 'center',
     marginTop: windowHeight * 0.20, // Responsive margin
@@ -37,18 +38,19 @@ export default StyleSheet.create({
   logo2: {
     width: windowWidth * 0.95, // Responsive width
     height: windowHeight * 0.25, // Responsive height
+    paddingBottom: windowHeight * 0.01,
   },
   descriptionText: {
     fontSize: windowWidth * 0.03, // Responsive font size
     fontWeight: 'normal',
-    color: 'gray',
+    color: 'black',
     textAlign: 'center',
     marginTop: windowHeight * 0.18, // Responsive margin
   },
   loading: {
     position: 'absolute',
-    alignItems:'center',
-    textAlign:'center',
+    alignItems: 'center',
+    textAlign: 'center',
     bottom: windowHeight * 0.50, // Responsive position from bottom
   },
 });

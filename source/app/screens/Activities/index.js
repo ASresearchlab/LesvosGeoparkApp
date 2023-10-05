@@ -112,9 +112,10 @@ export default function Discovery({ navigation }) {
                   {item.category?.title}
                 </Text>
                 <SizedBox height={4} />
-                {/* <Text typography="caption" type="secondary">
-                {item.category?.count} {t('location')}
-              </Text> */}
+                <Text typography="caption" type="secondary">
+                Υπάρχουν: 
+                {item.category?.count} {/*{t('route')}*/}
+              </Text>
               </View>
             </View>
             <TouchableOpacity
@@ -202,9 +203,9 @@ export default function Discovery({ navigation }) {
 
   return (
     <ScreenContainer navigation={navigation} edges={['left', 'right', 'top']}>
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <SearchPicker onSearch={onSearch} onScan={onScan} />
-      </View>
+      </View> */}
       {renderContent()}
       {/* <View style={{ flex: 1.5}}>
         <View style={{ flex: 1}}>

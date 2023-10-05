@@ -19,7 +19,7 @@ export const Setting = {
         primary: '#60685d',
         secondary: '#e09900',
         third:'#D3D3D3',
-        background: '#c0c9bd',
+        background: '#f9f9f9',
         card: '#ffffff',
         text: '#303233',
         textSecondary: '#727272',

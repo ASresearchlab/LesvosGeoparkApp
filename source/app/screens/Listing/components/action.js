@@ -28,14 +28,14 @@ export default function Action(props) {
   return (
     <View style={[styles.container, style]}>
       <View style={Styles.flex}>
-        {/* <View style={Styles.row}>
+        <View style={Styles.row}>
           <IconButton onPress={onSort}>
             <Icon name="swap-vertical" />
           </IconButton>
           <Text typography="title" weight="bold">
             {t(sort?.title)}
           </Text>
-        </View> */}
+        </View>
       </View>
       <View style={[Styles.row, Styles.paddingHorizontal16]}>
         <IconButton onPress={onView}>

@@ -8,8 +8,9 @@ export default StyleSheet.create({
   image: {borderRadius: 12, overflow: 'hidden'},
   titleCard: {
     position: 'absolute',
-    left: 8,
-    bottom: 8,
+    //left: 8,
+    padding: 8,
+    bottom: 0,
   },
   fullContainer: {
     height: 120,

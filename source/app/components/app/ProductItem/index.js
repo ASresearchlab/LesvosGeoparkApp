@@ -357,12 +357,12 @@ const Index = props => {
           </View>
           <SizedBox height={8} />
           <View style={styles.blockContent}>
-            {/* <View style={styles.rowPrice}>
+            <View style={styles.rowPrice}>
               <View style={Styles.flex}>
-                <Text typography="subtitle" type="secondary">
+                {/* <Text typography="subtitle" type="secondary">
                   {item.category?.title}
                 </Text>
-                <SizedBox height={4} />
+                <SizedBox height={4} /> */}
                 <Text typography="title" weight="bold">
                   {item.title}
                 </Text>
@@ -372,7 +372,7 @@ const Index = props => {
                   {item.priceDisplay}
                 </Text>
               )}
-            </View> */}
+            </View>
             {/* <SizedBox height={8} />
             <View style={Styles.row}>
               <Icon
@@ -462,7 +462,7 @@ const Index = props => {
               typography="subtitle"
               weight="bold"
               color="white"
-              numberOfLines={2}
+              numberOfLines={3}
               style={Styles.flex}>
               {item.title}
             </Text>

@@ -145,6 +145,7 @@ export default StyleSheet.create({
   },
   description: {
     fontSize: 16,
+    textAlign:'justify',
   },
   icon: {
     width: 50,

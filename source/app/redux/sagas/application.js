@@ -14,16 +14,19 @@ import {isValidURL} from '@utils';
  */
 function* onStartApplication(action) {
   const domain = yield select(domainSelect);
-  const onboard = yield select(onboardSelect);
+  //const onboard = yield select(onboardSelect);
   yield all([
-    yield put({type: actionTypes.SYNC_DEVICE_INFO}),
+    //yield put({type: actionTypes.SYNC_DEVICE_INFO}),
     yield put({
       type: actionTypes.SAVE_DOMAIN,
       domain: domain ?? Setting.domain,
     }),
   ]);
-  yield put({type: actionTypes.AUTH_CHECK});
-  yield delay(6000);
+  //yield put({type: actionTypes.AUTH_CHECK});
+  yield put({type: actionTypes.LOAD_HOME});
+  yield put({type: actionTypes.LOAD_DISCOVERY});
+  yield put({type: actionTypes.SYNC_SETTING});
+  yield delay(4000);
   action.callback?.({success: true});
 
   // if (onboard !== Setting.appVersion && !Setting.storeReview) {

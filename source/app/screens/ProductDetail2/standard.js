@@ -315,7 +315,7 @@ export default function Index({ navigation, route }) {
       { "featureType": "poi.park", "elementType": "labels", "stylers": [{ "visibility": "off" }] },
       // ... More styling rules for various map features
     ]
-
+    const [isTextFocused, setTextFocused] = useState(false);
     if (pageStyle === 'map') {
       const initLocation = listing.data?.[0]?.location;
       return (
@@ -331,8 +331,8 @@ export default function Index({ navigation, route }) {
             initialRegion={{
               latitude: 39.2087931411,
               longitude: 26.2549348658,
-              latitudeDelta: 0.1,
-              longitudeDelta: 0.1,
+              latitudeDelta: 0.9,
+              longitudeDelta: 0.9,
             }}
           >
             {geoJsonData &&
@@ -411,33 +411,33 @@ export default function Index({ navigation, route }) {
               <View style={{ paddingHorizontal: 16 }}>
                 {Array.isArray(selectedFeature?.properties.gx_media_links) && (
                   <FlatList
-                  horizontal
-                  showsVerticalScrollIndicator={true}
-                  scrollEnabled={true}
-                  data={selectedFeature.properties.gx_media_links}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => (
-                    <View style={{ marginRight: 10 }}>
-                      <Image
-                        source={{ uri: item }}
-                        style={{
-                          width: 200,
-                          aspectRatio: 1,
-                          borderRadius: 10,
-                          borderWidth: 2,
-                          borderColor: 'black',
-                          padding: 5,
-                        }}
-                      />
-                    </View>
-                  )}
-                />
-                ) }
+                    horizontal
+                    showsVerticalScrollIndicator={true}
+                    scrollEnabled={true}
+                    data={selectedFeature.properties.gx_media_links}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+                      <View style={{ marginRight: 10 }}>
+                        <Image
+                          source={{ uri: item }}
+                          style={{
+                            width: 200,
+                            aspectRatio: 1,
+                            borderRadius: 10,
+                            borderWidth: 2,
+                            borderColor: 'black',
+                            padding: 5,
+                          }}
+                        />
+                      </View>
+                    )}
+                  />
+                )}
                 <SizedBox height={10} />
                 <Divider />
                 <SizedBox height={10} />
-                
-                
+
+
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
                   {selectedFeature?.properties.Name}
                 </Text>

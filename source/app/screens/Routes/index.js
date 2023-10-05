@@ -104,16 +104,17 @@ export default function Discovery({navigation}) {
                 type="FontAwesome5"
               />
             </View>  */}
-            {/* <Image source={{uri: item?.category?.image?.thumb}} style={{width:40,height:40,borderRadius:10}} resizeMode='contain'/>
+            <Image source={{uri: item?.category?.image?.thumb}} style={{width:40,height:40,borderRadius:10}} resizeMode='contain'/>
             <View style={Styles.paddingHorizontal8}>
               <Text typography="title" weight="bold">
                 {item.category?.title}
               </Text>
               <SizedBox height={4} />
                <Text typography="caption" type="secondary">
-                {item.category?.count} {t('location')}
+                Υπάρχουν:  
+                {item.category?.count} {/*{t('route')}*/}
               </Text> 
-            </View> */}
+            </View>
           </View>
           <TouchableOpacity
             style={Styles.padding4}
@@ -200,9 +201,9 @@ export default function Discovery({navigation}) {
 
   return (
     <ScreenContainer navigation={navigation} edges={['left', 'right', 'top']}>
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <SearchPicker onSearch={onSearch} onScan={onScan} />
-      </View>
+      </View> */}
       {renderContent()}
     </ScreenContainer>
   );

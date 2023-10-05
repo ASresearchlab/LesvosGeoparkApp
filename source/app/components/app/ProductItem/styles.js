@@ -27,8 +27,8 @@ export default StyleSheet.create({
   thumbImage: {borderRadius: 12, overflow: 'hidden'},
   thumbTitle: {
     position: 'absolute',
-    left: 8,
-    bottom: 8,
+    padding: 8,
+    bottom: 0,
     flexDirection: 'row',
   },
   //thumb

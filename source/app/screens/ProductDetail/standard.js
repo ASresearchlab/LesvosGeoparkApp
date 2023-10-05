@@ -88,7 +88,7 @@ export default function Index({ navigation, route }) {
           setWeatherData(response.data);
         })
         .catch((error) => {
-          console.error('Error fetching weather data:', error);
+          //console.error('Error fetching weather data:', error);
         });
     } else {
       console.log("product?.email is null or undefined");
@@ -261,6 +261,12 @@ export default function Index({ navigation, route }) {
       // Fetch weather data on component mount
       fetchWeatherData(modifiedUrl);
       // Set up interval for periodic updates (e.g., every 15 minutes)
+      // const updateInterval = setInterval(() => {
+      //   fetchWeatherData(modifiedUrl);
+      // }, 15*60);
+
+      // // Clean up the interval on component unmount
+      // return () => clearInterval(updateInterval);
       return (
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingTop: 10, }}>
@@ -1762,7 +1768,8 @@ export default function Index({ navigation, route }) {
           </>
         );
       }
-      if (product?.location) {
+      if (product?.location?.longitude !== 26.62355194 && product?.location?.longitude !== NaN && product?.location?.longitude !== 0) {
+        //console.log("teeeeeeeeeeest", product?.location?.longitude)
         locationAction = (
           <>
             <SizedBox width={8} />

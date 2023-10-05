@@ -36,9 +36,9 @@ export default function Discovery({ navigation }) {
   const [ready, setReady] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(discoverySelect);
-  //const [showWebView, setShowWebView] = useState(false);
-  const [url, setUrl] = useState('https://www.lesvosmuseum.gr/e-shop/tickets');
-  //const fadeAnim = useRef(new Animated.Value(0)).current;
+  const [showWebView, setShowWebView] = useState(false);
+  const [url, setUrl] = useState('');
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     setTimeout(() => setReady(true), 1);
@@ -50,22 +50,21 @@ export default function Discovery({ navigation }) {
   const openWebView = (webUrl) => {
     setUrl(webUrl);
     setShowWebView(true);
-    // Animated.timing(fadeAnim, {
-    //   toValue: 1,
-    //   duration: 500,
-    //   useNativeDriver: true,
-    // }).start();
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
   };
   const closeWebView = () => {
-    setShowWebView(false);
-    setUrl('');
-    // Animated.timing(fadeAnim, {
-    //   toValue: 0,
-    //   duration: 500,
-    //   useNativeDriver: true,
-    // }).start(() => {
-
-    // });
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => {
+      setShowWebView(false);
+      setUrl('');
+    });
   };
   const onRefresh = () => {
     setRefreshing(true);
@@ -144,9 +143,11 @@ export default function Discovery({ navigation }) {
               </Text> */}
               </View>
             </View>
-            <TouchableOpacity>
-              <Text typography="subtitle" color="secondary">
-                {t('ΕΙΣΗΤΗΡΙΑ')}
+            <TouchableOpacity
+              style={Styles.padding4}
+              onPress={() => onPressCategoryList(item)}>
+              <Text typography="caption" color="secondary">
+                {t('see_more')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -220,19 +221,32 @@ export default function Discovery({ navigation }) {
 
   return (
     <ScreenContainer navigation={navigation} edges={['left', 'right', 'top']}>
-
+      
       {renderContent()}
-      <View style={{ flex: 1.5}}>
-        <View style={{ flex: 1}}>
-          <WebView
-            source={{ uri: url }}
-            style={{ flex: 1 }}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-          />
-          {/* <Button title={`\u00AB ${'Επιστροφη'}`} onPress={closeWebView} /> */}
-          {/* <Button title='Επιστροφη' /> */}
-        </View>
+      <View style={{ flex: showWebView ? 100 : 1 }}>
+        {showWebView ? (
+          <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+            <WebView
+              source={{ uri: url }}
+              style={{ flex: 1 }}
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+            />
+            {/* <Button title={`\u00AB ${'Επιστροφη'}`} onPress={closeWebView} /> */}
+            <Button title={`\u00AB ${'Επιστροφη'}`} onPress={closeWebView} />
+          </Animated.View>
+        ) : (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <TouchableOpacity
+              onPress={() => openWebView('https://www.lesvosmuseum.gr/e-shop/tickets')}
+            >
+              <Text style={{ backgroundColor: '#FFE177', color: 'black', padding: 5, borderRadius: 5, fontSize: 18, fontFamily: 'Arial' }}>
+                ΕΙΣΗΤΗΡΙΑ
+                
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </ScreenContainer>
   );

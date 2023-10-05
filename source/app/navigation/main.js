@@ -3,7 +3,7 @@ import {Linking, Pressable, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import messaging from '@react-native-firebase/messaging';
 import {useTranslation} from 'react-i18next';
-import {Account, CategoryList, Discovery, Empty, Home, WishList,Listing, Feedback, Geopark, Visit,Activities, TestPage, Routes, Setting} from '@screens';
+import {Account, CategoryList, Discovery, Empty, Home, WishList, Feedback, Listing, Visit,Activities, TestPage, Routes, Setting} from '@screens';
 import {Application, getFontFamily, Icon, Text} from '@components';
 import {Styles} from '@configs';
 import Navigator from '@navigator';
@@ -128,15 +128,16 @@ export default function Main() {
         name={t('interests_points')}
         component={Discovery}
         options={{
-          headerShown:true,
+          headerShown:false,
           headerTitleAlign: 'center',
           tabBarLabel: ({ focused }) => (
             <Text
               numberOfLines={2} // Set the number of lines to allow wrapping
-              style={{ textAlign: 'center',fontSize: 10,
+              style={{ textAlign: 'center',fontSize: 10,color: focused ? theme.colors.secondary : theme.colors.primary,
               fontFamily: getFontFamily({fontFamily: font}),marginBottom:-1,  }}
+
             >
-              {focused ? t('interest_points') : t('interest_points')}
+            {t('interest_points')}
             </Text>
           ),
           tabBarIcon: ({ color }) => (
@@ -144,7 +145,31 @@ export default function Main() {
           ),
         }}
       />
-      <Tab.Screen
+<Tab.Screen
+        name="Listing"
+        component={TestPage}
+        initialParams={{item:{id:109,type:'category',title:t('Δράσεις Γεωπάρκου')}} }     
+        options={{          
+             
+          headerTitleAlign: 'center',
+          headerShown: 'true',
+          tabBarLabel: ({ focused }) => (
+            <Text
+              numberOfLines={2} // Set the number of lines to allow wrapping
+              style={{ textAlign: 'center',fontSize: 10,color: focused ? theme.colors.secondary : theme.colors.primary,
+              fontFamily: getFontFamily({fontFamily: font}),marginBottom:-1,  }}
+
+            >
+            {t('Δράσεις Γεωπάρκου')}
+            </Text>
+          ),
+          tabBarIcon: ({ color }) => (
+            <Icon color={color} name="gauge" />
+          ),
+        }}
+      />
+
+      {/* <Tab.Screen
         name={t('activities')}
         component={Activities}
         options={{
@@ -153,7 +178,7 @@ export default function Main() {
           tabBarLabel: ({ focused }) => (
             <Text
               numberOfLines={2} // Set the number of lines to allow wrapping
-              style={{ textAlign: 'center',fontSize: 10,
+              style={{ textAlign: 'center',fontSize: 10,color: focused ? theme.colors.secondary : theme.colors.primary,
               fontFamily: getFontFamily({fontFamily: font}),marginBottom:-1,  }}
             >
               {focused ? t('activities') : t('activities')}
@@ -163,10 +188,11 @@ export default function Main() {
             <Icon color={color} name="gauge" />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Routes"
-        component={Routes}
+        component={TestPage}
+        initialParams={{item:{id:118,type:'category',title:t('routes')}}}
         options={{
           headerShown: true,
           headerTitleAlign: 'center',

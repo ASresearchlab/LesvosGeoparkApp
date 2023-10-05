@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {Pressable, View} from 'react-native';
+import React, { useContext } from 'react';
+import { Pressable, View } from 'react-native';
 import PropTypes from 'prop-types';
 import {
   Application,
@@ -9,15 +9,15 @@ import {
   SizedBox,
   Text,
 } from '@components';
-import {Styles} from '@configs';
+import { Styles } from '@configs';
 import styles from './styles';
-import {convertIcon} from '@utils';
-import {useTranslation} from 'react-i18next';
+import { convertIcon } from '@utils';
+import { useTranslation } from 'react-i18next';
 
 const Index = props => {
-  const {theme} = useContext(Application);
-  const {t} = useTranslation();
-  const {style, item, onPress, type} = props;
+  const { theme } = useContext(Application);
+  const { t } = useTranslation();
+  const { style, item, onPress, type } = props;
   /**
    * render for card style
    * @returns {JSX.Element}
@@ -29,7 +29,7 @@ const Index = props => {
         <>
           <Image
             style={[Styles.flex, styles.image]}
-            source={{uri: item.image?.full}}
+            source={{ uri: item.image?.full }}
             resizeMode="cover"
           />
           <Text
@@ -49,7 +49,7 @@ const Index = props => {
         style={[
           Styles.card,
           styles.cardContainer,
-          {backgroundColor: theme.colors.background},
+          { backgroundColor: theme.colors.background },
           style,
         ]}>
         {content}
@@ -68,33 +68,32 @@ const Index = props => {
         <>
           <Image
             style={[Styles.flex, styles.image]}
-            source={{uri: item.image?.full}}
+            source={{ uri: item.image?.full }}
             resizeMode="cover"
           />
           <View style={styles.iconFullContainer}>
-            <View
+            {/* <View
               style={[
                 styles.iconFull,
                 {
                   backgroundColor: item.color,
                 },
               ]}>
-              {/* <Icon
+              <Icon
                 {...convertIcon(item.icon)}
                 size={18}
                 color="white"
                 type="FontAwesome5"
-              /> */}
-            </View>
+              />
+            </View> */}
             <SizedBox width={8} />
             <View>
               <Text typography="title" weight="bold" color="white">
                 {item.title}
               </Text>
-              <SizedBox height={2} />
-              <Text typography="caption" color="white">
-                {/* {item.count}  */}
-                {/* {t('location')} */}
+              <SizedBox height={4} />
+              <Text typography="subtitle" color="white">
+                {item.count !== 0 ? item.count + ' '+ t('placetovisit') : t('')}
               </Text>
             </View>
           </View>
@@ -155,7 +154,7 @@ const Index = props => {
       <Pressable
         onPress={() => onPress(item)}
         disabled={!item?.id}
-        style={[styles.iconContainer, {backgroundColor: theme.colors.card}]}>
+        style={[styles.iconContainer, { backgroundColor: theme.colors.card }]}>
         {content}
       </Pressable>
     );
@@ -182,7 +181,7 @@ Index.propTypes = {
 Index.defaultProps = {
   style: {},
   item: {},
-  onPress: () => {},
+  onPress: () => { },
   type: 'card',
 };
 
