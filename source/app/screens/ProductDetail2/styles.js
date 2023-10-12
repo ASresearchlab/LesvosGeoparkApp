@@ -1,8 +1,8 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  listContainer: {flexGrow: 1, paddingVertical: 8},
-  item: {marginBottom: 16},
+  listContainer: { flexGrow: 1, paddingVertical: 8 },
+  item: { marginBottom: 16 },
   bottomSheetContainer: {
     paddingLeft: 16,
     paddingTop: 16,
@@ -25,6 +25,11 @@ export default StyleSheet.create({
     marginVertical: 8,
     borderRadius: 12,
   },
+  carouselContainer: {
+    // position: 'absolute',
+    // bottom: 0,
+    // left: 0
+  },
   locationIcon: {
     width: 36,
     height: 36,
@@ -33,19 +38,63 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    width:150,
+  featureText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'black',
+  },
+  feutureItem: {
+    backgroundColor: '#FFF',
+    padding: 15,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  itemLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap'
+  },
+  square: {
+    width: 24,
+    height: 24,
+    backgroundColor: '#55BCF6',
+    opacity: 1,
     borderRadius: 5,
-    backgroundColor:'#065535',
+    marginRight: 15,
+  },
+  itemText: {
+    maxWidth: '100%',
+    fontWeight: 'bold',
+  },
+  circular: {
+    width: 12,
+    height: 12,
+    borderColor: '#55BCF6',
+    borderWidth: 2,
+    borderRadius: 5,
+  },
+  title: {
+    width: 150,
+    borderRadius: 5,
+    backgroundColor: '#065535',
     color: 'white',
     padding: 1,
     flexWrap: 'wrap',
-    alignItems:'stretch',
-    textAlign:'center',
+    alignItems: 'stretch',
+    textAlign: 'center',
   },
   button: {
-    padding:20,
-    backgroundColor:'#c0c9bd'
+    padding: 20,
+    backgroundColor: '#c0c9bd'
+  },
+  button2: {
+    padding: 10,
+    right: 0,
+    marginLeft: 'auto'
   },
   description: {
     lineHeight: 20,
@@ -55,13 +104,13 @@ export default StyleSheet.create({
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    
+
   },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize:12,
+    fontSize: 12,
   },
   modalText: {
     marginBottom: 15,

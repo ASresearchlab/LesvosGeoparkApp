@@ -60,7 +60,9 @@ export default function Index({ navigation, route }) {
   const [destination, setDestination] = useState(null);
   const MAP_API_KEY = 'AIzaSyDsyKauf-1xG9g4hoL4OSfx1h-yI0s0Kq4';
   const [geoJsonData, setGeoJsonData] = useState(null);
+  const [geoJsonData2, setGeoJsonData2] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible2, setModalVisible2] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState(null);
   const product = route.params?.item;
 
@@ -73,6 +75,20 @@ export default function Index({ navigation, route }) {
       .then((response) => response.json())
       .then((data) => {
         setGeoJsonData(data); // Store the fetched GeoJSON data in the state
+      })
+      .catch((error) => {
+        console.error('Error fetching GeoJSON:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const geoJsonUrl =
+      product?.status;
+
+    fetch(geoJsonUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setGeoJsonData2(data.features); // Store the features array from the fetched GeoJSON data in the state
       })
       .catch((error) => {
         console.error('Error fetching GeoJSON:', error);
@@ -293,16 +309,23 @@ export default function Index({ navigation, route }) {
     setSelectedFeature(feature);
     setModalVisible(true);
   };
+  const openModal2 = () => {
+    setModalVisible2(true);
+  };
 
   // Function to close the modal
   const closeModal = () => {
     setSelectedFeature(null);
     setModalVisible(false);
   };
+  const closeModal2 = () => {
+    setModalVisible2(false);
+  };
   /**
    * render content
    * @returns {JSX.Element}
    */
+
   const renderContent = () => {
     customStyle = [
       { "elementType": "labels.text.fill", "stylers": [{ "color": "#3c4646" }] },
@@ -315,7 +338,7 @@ export default function Index({ navigation, route }) {
       { "featureType": "poi.park", "elementType": "labels", "stylers": [{ "visibility": "off" }] },
       // ... More styling rules for various map features
     ]
-    const [isTextFocused, setTextFocused] = useState(false);
+
     if (pageStyle === 'map') {
       const initLocation = listing.data?.[0]?.location;
       return (
@@ -400,6 +423,39 @@ export default function Index({ navigation, route }) {
                 return null;
               })}
           </MapView>
+          <View style={styles.carouselContent}>
+            <TouchableOpacity
+              onPress={() => openModal2()}
+              style={[
+                styles.locationIcon,
+                Styles.card,
+                {
+                  backgroundColor: theme.colors.card,
+                },
+              ]}>
+              <Icon name="menu" color={theme.colors.primary} />
+            </TouchableOpacity>
+            <Carousel
+              //layout={'tinder'} layoutCardOffset={`9`}
+              data={geoJsonData2}
+              renderItem={_renderItem}
+              sliderWidth={width}
+              itemWidth={width}
+              onSnapToItem={index => {
+                const item = geoJsonData2[index];
+                mapRef.current?.animateToRegion(
+                  {
+                    latitude: item.geometry.coordinates[1], // Replace with the latitude property of your item
+                    longitude: item.geometry.coordinates[0], // Replace with the longitude property of your item
+                    latitudeDelta: 0.03, // Adjust the delta values as needed
+                    longitudeDelta: 0.03,
+                  },
+                  500
+                );
+              }}
+              containerCustomStyle={styles.carouselContainer}
+            />
+          </View>
           {/* Modal */}
           <Modal style={styles.rowContent} visible={isModalVisible} animationType="slide" >
             <Pressable
@@ -451,6 +507,32 @@ export default function Index({ navigation, route }) {
               </View>
             </ScrollView>
           </Modal>
+          <Modal style={styles.rowContent} visible={isModalVisible2} animationType="slide" >
+            <Pressable
+              style={[styles.button]}
+              onPress={closeModal2}>
+              <Icon name="arrow-left" color={theme.colors.primary} Back to Map />
+            </Pressable>
+            <ScrollView style={{ backgroundColor: 'white' }}>
+              <View style={{ paddingHorizontal: 16 }}>
+                {geoJsonData &&
+                  geoJsonData.features.map((feature, index) => (
+                    <View style={styles.feutureItem}>
+                      <View style={styles.itemLeft}>
+                        <View style={styles.square}></View>
+                        <TouchableOpacity onPress={() => onMarkerPress(feature)}>
+                        
+                          <Text style={styles.itemText}>{index=index+1}. {feature.properties.Name}</Text>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.circular}></View>
+                    </View>
+                  ))}
+
+                {/* Add any other information you want to display in the modal */}
+              </View>
+            </ScrollView>
+          </Modal>
         </>
       );
     }
@@ -493,7 +575,58 @@ export default function Index({ navigation, route }) {
       />
     );
   };
+  const _renderItem = ({ item, index }) => {
+    // return (
+    //   <View style={[
+    //     styles.carouselItem,
+    //     Styles.card,
+    //     {
+    //       backgroundColor: theme.colors.card,
+    //     },
+    //   ]}>
+    //     {item.properties.gx_media_links &&
+    //       Array.isArray(item.properties.gx_media_links) &&
+    //       item.properties.gx_media_links.map((link, index) => {
+    //         console.log('Link:', link); // Log the link here
+    //         return (
+    //           <Image key={index} source={{ uri: link }} style={{ width: width *0.7, height: 100, flexDirection: 'row',
+    //           justifyContent: 'space-between', }} resizeMode='cover' />
+    //         );
+    //       })}
+    //       <Text style={{color:'black'}} typography="title" weight="bold">{item.properties.Name}</Text>
+    //   </View>
+    // );
+    const firstImage = item.properties.gx_media_links && item.properties.gx_media_links[0];
+    return (
 
+      <TouchableOpacity onPress={() => onMarkerPress(item)}>
+        <View
+          style={[
+            styles.carouselItem,
+            Styles.card,
+            {
+              backgroundColor: theme.colors.card,
+            },
+          ]}
+        >
+          {firstImage && (
+            <Image
+              source={{ uri: firstImage }}
+              style={{
+                width: width * 0.88, // Set width to itemWidth for full width
+                height: (width / width) * 110, // Calculate height to maintain aspect ratio
+              }}
+              resizeMode='cover'
+            />
+          )}
+          <Text style={{ color: 'black' }} typography="title" weight="bold">
+            {index+=1}. 
+            {item.properties.Name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   return (
     <ScreenContainer
       edges={['left', 'right', 'bottom']}
@@ -525,6 +658,7 @@ export default function Index({ navigation, route }) {
           // onFilter={onFilter}
         />*/}
         {renderContent()}
+
       </View>
     </ScreenContainer>
   );
