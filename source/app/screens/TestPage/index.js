@@ -52,9 +52,10 @@ export default function Index({ navigation, route }) {
   const [sort, setSort] = useState(filter.sort);
 
   useEffect(() => {
-
+    
     if (route.params?.item) {
       filter.setCategory = route.params?.item;
+      
     }
     dispatch(listingActions.onLoad({ filter }));
     return () => dispatch(listingActions.onReset());
@@ -184,11 +185,11 @@ export default function Index({ navigation, route }) {
     }
   };
   const onChangeSort = item => {
-    listRef.current?.scrollToOffset({offset: 0, animated: true});
-    filter.update({sort: item});
+    listRef.current?.scrollToOffset({ offset: 0, animated: true });
+    filter.update({ sort: item });
     sortRef.current?.dismiss();
     setSort(item);
-    dispatch(listingActions.onLoad({filter, loading: true}));
+    dispatch(listingActions.onLoad({ filter, loading: true }));
   };
   /**
    * render data listing
@@ -241,7 +242,7 @@ export default function Index({ navigation, route }) {
       </BottomSheetView>
     );
   };
-  
+
   /**
    * render content
    * @returns {JSX.Element}
@@ -305,7 +306,7 @@ export default function Index({ navigation, route }) {
             <Carousel
               ref={sliderRef}
               data={listing.data ?? []}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return (
                   <View
                     key={`${item?.id}${index}${modeView}`}
@@ -324,17 +325,17 @@ export default function Index({ navigation, route }) {
                   </View>
                 );
               }}
-              
+
               sliderWidth={width}
               itemWidth={width}
               onSnapToItem={index => {
                 const item = listing.data[index];
                 mapRef.current?.animateToRegion(
-                  {...item.location, ...defaultDelta},
+                  { ...item.location, ...defaultDelta },
                   500,
                 );
               }}
-            /> 
+            />
           </View>
         </>
       );
@@ -388,11 +389,11 @@ export default function Index({ navigation, route }) {
             <View style={Styles.nativeRightButton}>
               <IconButton onPress={onChangePageStyle} size="small">
                 {route.params.item?.mapicon &&
-                <Icon
-                  name={
-                    pageStyle === 'map' ? 'view-list-outline' : 'map-legend'
-                  }
-                />
+                  <Icon
+                    name={
+                      pageStyle === 'map' ? 'view-list-outline' : 'map-legend'
+                    }
+                  />
                 }
               </IconButton>
             </View>
@@ -400,7 +401,7 @@ export default function Index({ navigation, route }) {
         }, title: route.params?.item?.title
       }}>
       <View style={Styles.flex}>
-      {renderSelectSort()}
+        {renderSelectSort()}
         {pageStyle == 'listing' &&
           <Action
             style={{ backgroundColor: theme.colors.card }}

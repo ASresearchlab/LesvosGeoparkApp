@@ -361,11 +361,12 @@ export default function Index({ navigation, route }) {
             {geoJsonData &&
               geoJsonData.features.map((feature, index) => (
                 <Marker
-                  key={index}
+                 key={index}
                   coordinate={{
                     latitude: feature.geometry.coordinates[1],
                     longitude: feature.geometry.coordinates[0],
                   }}
+                  onPress={() => { ; sliderRef.current.snapToItem(index);console.log(index) }}
                 //onPress={() => onMarkerPress(feature)}
                 //number={index = index + 1}
                 >
@@ -381,7 +382,7 @@ export default function Index({ navigation, route }) {
                     color: 'green', fontWeight: 'bold', position: 'absolute', top: 15, left: 10.5,
                     backgroundColor: 'white', width: 20, height: 20, borderRadius: 10, textAlign: 'center'
                   }}>
-                    {index += 1}
+                    {index + 1}
                   </Text>
                   <Callout tooltip={true} onPress={() => onMarkerPress(feature)}>
 
@@ -437,6 +438,7 @@ export default function Index({ navigation, route }) {
             </TouchableOpacity>
             <Carousel
               //layout={'tinder'} layoutCardOffset={`9`}
+              ref={sliderRef}
               data={geoJsonData2}
               renderItem={_renderItem}
               sliderWidth={width}
@@ -457,7 +459,9 @@ export default function Index({ navigation, route }) {
             />
           </View>
           {/* Modal */}
-          <Modal style={styles.rowContent} visible={isModalVisible} animationType="slide" >
+          <Modal style={styles.rowContent} visible={isModalVisible} animationType="slide"onRequestClose={() => {
+                    closeModal()
+                  }} >
             <Pressable
               style={[styles.button]}
               onPress={closeModal}>
@@ -515,17 +519,34 @@ export default function Index({ navigation, route }) {
             </Pressable>
             <ScrollView style={{ backgroundColor: 'white' }}>
               <View style={{ paddingHorizontal: 16 }}>
+
                 {geoJsonData &&
                   geoJsonData.features.map((feature, index) => (
+
                     <View style={styles.feutureItem}>
                       <View style={styles.itemLeft}>
-                        <View style={styles.square}></View>
+
+                        <View>
+                          {feature.properties.gx_media_links && feature.properties.gx_media_links[0] && (
+                            <TouchableOpacity onPress={() => onMarkerPress(feature)}>
+                              <Image
+                                source={{ uri: feature.properties.gx_media_links && feature.properties.gx_media_links[0] }}
+                                style={{
+                                  width: 40, // Set width to itemWidth for full width
+                                  height: 40,
+                                  borderRadius: 5,
+                                  marginRight: 15, // Calculate height to maintain aspect ratio
+                                }}
+                                resizeMode='cover'
+                              />
+                            </TouchableOpacity>
+                          )}
+                        </View>
                         <TouchableOpacity onPress={() => onMarkerPress(feature)}>
-                        
-                          <Text style={styles.itemText}>{index=index+1}. {feature.properties.Name}</Text>
+                          <Text style={styles.itemText}>{index = index + 1}. {feature.properties.Name}</Text>
                         </TouchableOpacity>
                       </View>
-                      <View style={styles.circular}></View>
+                      {/* <View style={styles.circular}></View> */}
                     </View>
                   ))}
 
@@ -620,7 +641,7 @@ export default function Index({ navigation, route }) {
             />
           )}
           <Text style={{ color: 'black' }} typography="title" weight="bold">
-            {index+=1}. 
+            {index += 1}.
             {item.properties.Name}
           </Text>
         </View>

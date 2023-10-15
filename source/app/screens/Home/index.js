@@ -218,6 +218,9 @@ export default function Home({ navigation }) {
               {showWebView ? (
                 <Modal
                   isVisible={showWebView}
+                  onRequestClose={() => {
+                    closeWebView()
+                  }}
                   onBackdropPress={closeWebView}
                   animationIn="slideInUp" // Adjust animation as needed
                   animationOut="slideOutDown" // Adjust animation as needed

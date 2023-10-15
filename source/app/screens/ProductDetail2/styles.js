@@ -67,7 +67,7 @@ export default StyleSheet.create({
     marginRight: 15,
   },
   itemText: {
-    maxWidth: '100%',
+    maxWidth: '92%',
     fontWeight: 'bold',
   },
   circular: {
