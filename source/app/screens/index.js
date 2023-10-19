@@ -45,12 +45,14 @@ import Videoscreen from './Videoscreen';
 import Activities from './Activities';
 import TestPage from './TestPage';
 import ProductDetail2 from './ProductDetail2';
+import ProductDetail3 from './ProductDetail3';
 import Routes from './Routes';
 import Setting from'./Setting'
 
 export {
   Routes,
   ProductDetail2,
+  ProductDetail3,
   TestPage,
   Activities,
   Videoscreen,

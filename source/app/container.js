@@ -55,13 +55,13 @@ export default function AppContainer() {
     if (darkModeStorage === false) {
       isDark = false;
     }
-    const schema = isDark ? item.dark : item.light;
+    const schema = isDark ? item.light : item.light;
     SystemNavigationBar.setNavigationColor(
       schema.colors.card,
-      isDark ? 'light' : 'dark',
+      isDark ? 'light' : 'light',
       'navigation',
     );
-    StatusBar.setBarStyle(isDark ? 'light-content' : 'dark-content');
+    StatusBar.setBarStyle(isDark ? 'light-content' : 'light-content');
     return schema;
   }, [darkModeStorage, isDarkMode, themeStorage]);
 

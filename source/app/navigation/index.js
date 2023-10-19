@@ -41,6 +41,7 @@ import {
   threeDModel,
   Videoscreen,
   ProductDetail2,
+  ProductDetail3
 } from '@screens';
 import {Colors} from '@configs';
 import {Application, Text} from '@components';
@@ -68,7 +69,7 @@ export default function App() {
                 {...props}
                 typography="h4"
                 weight="bold"
-                style={{color: props.tintColor,width:290}}
+                style={{color: props.tintColor,width:280}}
               />
             );
           },
@@ -198,6 +199,11 @@ export default function App() {
           name="ProductDetail2"
           component={ProductDetail2}
           options={{title: t('Διαδρομή')}}
+        />
+        <Stack.Screen
+          name="ProductDetail3"
+          component={ProductDetail3}
+          options={{title: t('zone')}}
         />
         <Stack.Screen
           name="BookingDetail"

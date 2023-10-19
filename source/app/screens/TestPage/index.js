@@ -54,7 +54,7 @@ export default function Index({ navigation, route }) {
   useEffect(() => {
     
     if (route.params?.item) {
-      filter.setCategory = route.params?.item;
+      filter.setCategory = route.params.item;
       
     }
     dispatch(listingActions.onLoad({ filter }));

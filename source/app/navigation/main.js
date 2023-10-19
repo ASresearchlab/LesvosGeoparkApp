@@ -191,7 +191,7 @@ export default function Main() {
       /> */}
       <Tab.Screen
         name="Routes"
-        component={TestPage}
+        component={Routes}
         initialParams={{item:{id:118,type:'category',title:t('routes')}}}
         options={{
           headerShown: true,

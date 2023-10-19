@@ -304,11 +304,11 @@ export default function Index({ navigation, route }) {
             </View>
           </View>
 
-          {/* <View style={{flexDirection: 'row',alignItems: 'center',paddingHorizontal:16,paddingBottom:10}}>
-          <Text typography="h4" weight="regular" type="secondary" style={{fontFamily:'HypatiaSansPro',textAlign:'justify'}}>
-                {product?.category?.title}
-          </Text>
-        </View> */}
+          {/* <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingBottom: 10 }}>
+            <Text typography="h5" weight="regular" type="secondary" style={{ fontFamily: 'HypatiaSansPro', textAlign: 'justify', fontSize: 12 }}>
+              {product?.website}
+            </Text>
+          </View> */}
 
 
         </View>
@@ -402,6 +402,11 @@ export default function Index({ navigation, route }) {
   const showRoute = () => {
     if (product) {
       navigation.navigate('ProductDetail2', { item: product });
+    }
+  }
+  const showRoute2 = () => {
+    if (product && product.website2) { // Ensure that both product and product.website2 exist
+      navigation.navigate('ProductDetail3', { item: { ...product, website2: product.website2 } });
     }
   }
   /**
@@ -924,6 +929,11 @@ export default function Index({ navigation, route }) {
     if (product) {
       return (
         <View style={Styles.paddingHorizontal16}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10, width:250, flexWrap:'wrap' }}>
+            <Text typography="h5" weight="regular" type="secondary" style={{ fontFamily: 'HypatiaSansPro',fontStyle: 'italic', textAlign: 'justify', fontSize: 12 }}>
+              {product?.website}
+            </Text>
+          </View>
           {/* <SizedBox height={16} /> */}
           <SizedBox height={8} />
           {/* <Text typography="subtitle" style={styles.description}>
@@ -1224,7 +1234,7 @@ export default function Index({ navigation, route }) {
                       backgroundColor: theme.colors.border,
                     },
                   ]}>
-                  <Icon name="star" size={20} />
+                  <Icon name="map-marker" size={20} />
                 </View>
                 <SizedBox width={8} />
                 <View style={styles.inline}>
@@ -1460,7 +1470,551 @@ export default function Index({ navigation, route }) {
       </View>
     );
   };
+  const renderInformation3 = () => {
+    if (product) {
+      return (
+        <View style={Styles.paddingHorizontal16}>
+          {/* <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10, width:250, flexWrap:'wrap' }}>
+            <Text typography="h5" weight="regular" type="secondary" style={{ fontFamily: 'HypatiaSansPro',fontStyle: 'italic', textAlign: 'justify', fontSize: 12 }}>
+              {product?.website}
+            </Text>
+          </View> */}
+          {/* <SizedBox height={16} /> */}
+          <SizedBox height={8} />
+          {/* <Text typography="subtitle" style={styles.description}>
+            {product?.description.replace(/<\/?[^>]+(>|$)/g, "")}
+          </Text> */}
+          {/* <View style={styles.rowContent}>
+            <TouchableOpacity
+              style={[Styles.flex, Styles.row]}
+              onPress={onAuthor}>
+              <Image
+                source={{uri: product?.author?.image}}
+                style={styles.userImage}
+              />
+              <SizedBox width={8} />
+              <View>
+                <Text typography="title" weight="bold">
+                  {product?.author?.name}
+                </Text>
+                <Text typography="subtitle" type="secondary">
+                  {product?.author?.email}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            {product?.status && (
+              <View
+                style={[
+                  styles.statusContent,
+                  {backgroundColor: theme.colors.primary},
+                ]}>
+                <Text typography="subtitle" type="secondary" color="white">
+                  {product?.status}
+                </Text>
+              </View>
+            )}
+          </View> */}
+          <View style={Styles.row}>
 
+            {/* <Text
+              typography="h4"
+              weight="bold"
+              style={[Styles.flex, Styles.paddingVertical4]}>
+              {product?.title}
+            </Text> */}
+            {/* <IconButton type="secondary" onPress={onFavorite} size="small">
+              <Icon
+                name={product?.favorite ? 'heart' : 'heart-outline'}
+                color={theme.colors.primary}
+              />
+            </IconButton>
+            <SizedBox width={4} />
+            {product?.bookingUse && (
+              <TouchableOpacity
+                onPress={onBooking}
+                style={[
+                  styles.bookingContent,
+                  {
+                    backgroundColor: theme.colors.primary + Opacity[30],
+                  },
+                ]}>
+                <Text typography="title" color="primary">
+                  {t('book_now')}
+                </Text>
+              </TouchableOpacity>
+            )} */}
+          </View>
+          <View style={Styles.row}>
+            <View style={Styles.flex}>
+              {/* <Text typography="title" type="secondary">
+                {product?.category?.title}
+              </Text> */}
+              {/* <SizedBox height={4} />
+              <TouchableOpacity style={Styles.row} onPress={onReview}>
+                <View
+                  style={[
+                    styles.tagRate,
+                    {backgroundColor: theme.colors.primary},
+                  ]}>
+                  <Text typography="caption" weight="bold" color="white">
+                    {product?.rate}
+                  </Text>
+                </View>
+                <SizedBox width={4} />
+                <Rating rate={product?.rate} size={14} disabled={true} />
+                <SizedBox width={4} />
+                <Text typography="caption">({product?.numRate})</Text>
+              </TouchableOpacity> */}
+            </View>
+            {/* {product?.priceDisplay && (
+              <Text typography="h4" weight="bold" color="primary">
+                {product.priceDisplay}
+              </Text>
+            )} */}
+          </View>
+          {product?.address && (
+            <>
+              {renderAddressAction()}
+              {/* <TouchableOpacity
+                style={[Styles.row, Styles.paddingVertical8]}
+                onPress={() => addressRef.current?.present()}>
+                <View
+                  style={[
+                    styles.iconInfo,
+                    {
+                      backgroundColor: theme.colors.border,
+                    },
+                  ]}>
+                  <Icon name="map-marker-outline" size={20} />
+                </View>
+                <SizedBox width={8} />
+                <View style={Styles.flex}>
+                  <Text typography="subtitle" type="secondary">
+                    {t('address')}
+                  </Text>
+                  <SizedBox height={2} />
+                  <Text typography="subtitle" weight="bold">
+                    {product?.address}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    enableExperimental();
+                    setShowCountry(!showCountry);
+                  }}>
+                  <Icon name={showCountry ? 'chevron-up' : 'chevron-down'} />
+                </TouchableOpacity>
+              </TouchableOpacity> */}
+              {/* {showCountry && (
+                <View style={[styles.subInfoContent, Styles.paddingVertical4]}>
+                  <Text typography="subtitle" type="secondary">
+                    {`${product.country?.title}, ${product.city?.title}, ${product.state?.title}`}
+                  </Text>
+                </View>
+              )} */}
+            </>
+          )}
+          {product?.phone && (
+            <>
+              {renderPhoneAction()}
+              <TouchableOpacity
+                style={[Styles.row, Styles.paddingVertical8]}
+                onPress={() => phoneRef.current?.present()}>
+                {/* <View
+                  style={[
+                    styles.iconInfo,
+                    {
+                      backgroundColor: theme.colors.border,
+                    },
+                  ]}>
+                  <Icon name="phone-outline" size={20} />
+                </View>
+                <SizedBox width={8} />
+                <View style={Styles.flex}>
+                  <Text typography="subtitle" type="secondary">
+                    {t('phone')}
+                  </Text>
+                  <SizedBox height={2} />
+                  <Text typography="subtitle" weight="bold">
+                    {product?.phone}
+                  </Text>
+                </View> */}
+              </TouchableOpacity>
+            </>
+          )}
+          {/* {product?.fax && (
+            <TouchableOpacity
+              style={[Styles.row, Styles.paddingVertical8]}
+              onPress={() => onInfoAction(`tel:${product?.fax}`)}>
+              <View
+                style={[
+                  styles.iconInfo,
+                  {
+                    backgroundColor: theme.colors.border,
+                  },
+                ]}>
+                <Icon name="fax" size={20} />
+              </View>
+              <SizedBox width={8} />
+              <View style={Styles.flex}>
+                <Text typography="subtitle" type="secondary">
+                  {t('fax')}
+                </Text>
+                <SizedBox height={2} />
+                <Text typography="subtitle" weight="bold">
+                  {product?.fax}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )} */}
+          {/* {product?.email && (
+            <TouchableOpacity
+              style={[Styles.row, Styles.paddingVertical8]}
+              onPress={() => onInfoAction(`mailto:${product?.email}`)}>
+              <View
+                style={[
+                  styles.iconInfo,
+                  {
+                    backgroundColor: theme.colors.border,
+                  },
+                ]}>
+                <Icon name="email-outline" size={20} />
+              </View>
+              <SizedBox width={8} />
+              <View style={Styles.flex}>
+                <Text typography="subtitle" type="secondary">
+                  {t('email')}
+                </Text>
+                <SizedBox height={2} />
+                <Text typography="subtitle" weight="bold">
+                  {product?.email}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )} */}
+          <View style={styles.inline}>
+            {product?.email && (
+              <TouchableOpacity
+                style={[Styles.row, Styles.paddingVertical8]}
+              >
+                <View
+                  style={[
+                    styles.iconInfo,
+                    {
+                      backgroundColor: theme.colors.border,
+                    },
+                  ]}>
+                  <Icon name="clock" size={20} />
+                </View>
+                <SizedBox width={8} />
+                <View style={styles.inline}>
+                  <Text typography="subtitle" type="secondary">
+                    {/* {t('email')} */}
+                  </Text>
+                  <SizedBox height={2} />
+                  <Text typography="subtitle" weight="bold">
+                    {product?.email}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            {product?.email && (
+              <TouchableOpacity
+                style={[Styles.row, Styles.paddingVertical8]}
+              >
+                <View
+                  style={[
+                    styles.iconInfo,
+                    {
+                      backgroundColor: theme.colors.border,
+                    },
+                  ]}>
+                  <Icon name="map-marker-distance" size={20} />
+                </View>
+                <SizedBox width={8} />
+                <View style={styles.inline}>
+                  <Text typography="subtitle" type="secondary">
+                    {/* {t('email')} */}
+                  </Text>
+                  <SizedBox height={2} />
+                  <Text typography="subtitle" weight="bold">
+                    {product?.fax}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            {product?.email && (
+              <TouchableOpacity
+                style={[Styles.row, Styles.paddingVertical8]}
+              >
+                <View
+                  style={[
+                    styles.iconInfo,
+                    {
+                      backgroundColor: theme.colors.border,
+                    },
+                  ]}>
+                  <Icon name="car" size={20} />
+                </View>
+                <SizedBox width={8} />
+                <View style={styles.inline}>
+                  <Text typography="subtitle" type="secondary">
+                    {/* {t('email')} */}
+                  </Text>
+                  <SizedBox height={2} />
+                  <Text typography="subtitle" weight="bold">
+                    {product?.phone}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            {product?.email && (
+              <TouchableOpacity
+                style={[Styles.row, Styles.paddingVertical8]}
+              >
+                <View
+                  style={[
+                    styles.iconInfo,
+                    {
+                      backgroundColor: theme.colors.border,
+                    },
+                  ]}>
+                  <Icon name="map-marker" size={20} />
+                </View>
+                <SizedBox width={8} />
+                <View style={styles.inline}>
+                  <Text typography="subtitle" type="secondary">
+                    {/* {t('email')} */}
+                  </Text>
+                  <SizedBox height={2} />
+                  <Text typography="subtitle" weight="bold">
+                    {product?.address}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            {/* {product?.website2 && (
+              <TouchableOpacity
+                style={[Styles.row, Styles.paddingVertical8]}
+                >
+              </TouchableOpacity>
+            )} */}
+            {product?.openHours?.length > 0 && (
+              <>
+                {/* <TouchableOpacity
+                  style={[Styles.row, Styles.paddingVertical8]}
+                  onPress={onOpenHours}>
+                  <View
+                    style={[
+                      styles.iconInfo,
+                      {
+                        backgroundColor: theme.colors.border,
+                      },
+                    ]}>
+                    <Icon name="star" size={20} />
+                  </View>
+                  <SizedBox width={8} />
+                  <View style={Styles.flex}>
+                    <Text typography="subtitle" type="secondary">
+                      {t('open_time')}
+                    </Text>
+                    <Text typography="subtitle" weight="bold">
+                      {product?.address}
+                    </Text>
+                  </View>
+
+                </TouchableOpacity> */}
+
+                {showOpenHours &&
+                  product?.openHours.map(item => {
+                    return (
+                      <View>
+
+                      </View>
+                    );
+                  })}
+              </>
+            )}
+          </View>
+          <SizedBox height={20} />
+          {/* <Text typography="subtitle" style={styles.description}>
+            {product?.description.replace(/<\/?[^>]+(>|$)/g, "")}
+          </Text> */}
+{/* 
+          <View style={{ bottom: 0, width: 150, marginLeft: 'auto', marginRight: 'auto', paddingTop: 30 }}>
+            <Button onPress={showRoute2}>Ζώνη</Button>
+          </View> */}
+          {/*{product?.attachments?.length > 0 && (
+            <>
+              <TouchableOpacity
+                style={[Styles.row, Styles.paddingVertical8]}
+                onPress={onOpenFiles}>
+                <View
+                  style={[
+                    styles.iconInfo,
+                    {
+                      backgroundColor: theme.colors.border,
+                    },
+                  ]}>
+                  <Icon name="paperclip" size={20} />
+                </View>
+                <SizedBox width={8} />
+                <View style={Styles.flex}>
+                  <Text typography="subtitle" type="secondary">
+                    {t('attachments')}
+                  </Text>
+                  <SizedBox height={2} />
+                  <Text typography="subtitle" weight="bold">
+                    {product?.attachments?.length} {t('files')}
+                  </Text>
+                </View>
+                <Icon name={showAttachments ? 'chevron-up' : 'chevron-down'} />
+              </TouchableOpacity>
+              {showAttachments &&
+                product?.attachments.map(item => {
+                  return (
+                    <View key={item.url} style={styles.subInfoContent}>
+                      <View style={styles.rowAttachment}>
+                        <Text typography="caption" type="secondary">
+                          {item.name}
+                        </Text>
+                        <DownloadFile
+                          onCompleted={() => {
+                            Toast.show(t('download_success'));
+                          }}
+                          link={item.url}>
+                          {({ percent, uri, download, open }) => {
+                            const icon = uri ? 'check' : 'download';
+                            let trailing = (
+                              <Icon
+                                name={icon}
+                                size={16}
+                                color={theme.colors.secondary}
+                              />
+                            );
+                            if (!uri && percent > 0 && percent < 100) {
+                              trailing = (
+                                <Circle
+                                  progress={percent / 100}
+                                  color={theme.colors.secondary}
+                                  thickness={2}
+                                  size={16}
+                                />
+                              );
+                            }
+                            return (
+                              <TouchableOpacity
+                                onPress={uri ? open : download}
+                                style={[Styles.row, Styles.paddingVertical8]}>
+                                <Text
+                                  typography="subtitle"
+                                  weight="bold"
+                                  color="secondary">
+                                  {item.size}
+                                </Text>
+                                <SizedBox width={8} />
+                                {trailing}
+                              </TouchableOpacity>
+                            );
+                          }}
+                        </DownloadFile>
+                      </View>
+                      <Divider />
+                    </View>
+                  );
+                })}
+            </>
+              )}*/}
+
+          <SizedBox height={8} />
+
+          <SizedBox height={16} />
+          <View style={Styles.row}>
+
+
+          </View>
+        </View>
+      );
+    }
+
+    return (
+      <View style={Styles.paddingHorizontal16}>
+        <SizedBox height={16} />
+        <View style={styles.rowContent}>
+          <View style={[Styles.flex, Styles.row]}>
+            <ContentLoader style={styles.userImage} />
+            <SizedBox width={8} />
+            <View>
+              <SizedBox height={10} width={100}>
+                <ContentLoader />
+              </SizedBox>
+              <SizedBox height={4} />
+              <SizedBox height={10} width={120}>
+                <ContentLoader />
+              </SizedBox>
+            </View>
+          </View>
+          <SizedBox height={16} width={48}>
+            <ContentLoader />
+          </SizedBox>
+        </View>
+        <SizedBox height={4} />
+        <View style={Styles.row}>
+          <View style={Styles.flex}>
+            <SizedBox height={16} width={120}>
+              <ContentLoader />
+            </SizedBox>
+          </View>
+          <SizedBox height={24} width={64}>
+            <ContentLoader />
+          </SizedBox>
+        </View>
+        <SizedBox height={8} />
+        <View style={styles.rowContent}>
+          <View style={Styles.flex}>
+            <SizedBox height={10} width={100}>
+              <ContentLoader />
+            </SizedBox>
+            <SizedBox height={4} />
+            <SizedBox height={24} width={100}>
+              <ContentLoader />
+            </SizedBox>
+          </View>
+          <View style={Styles.paddingVertical8}>
+            <SizedBox height={24} width={24}>
+              <ContentLoader />
+            </SizedBox>
+          </View>
+        </View>
+        {Array.from(Array(6).keys()).map(index => {
+          return (
+            <View
+              key={`info${index}`}
+              style={[Styles.row, Styles.paddingVertical8]}>
+              <ContentLoader style={styles.iconInfo} />
+              <SizedBox width={8} />
+              <View style={Styles.flex}>
+                <SizedBox height={10} width={100}>
+                  <ContentLoader />
+                </SizedBox>
+                <SizedBox height={2} />
+                <SizedBox height={10} width={150}>
+                  <ContentLoader />
+                </SizedBox>
+              </View>
+            </View>
+          );
+        })}
+        {Array.from(Array(10).keys()).map(index => {
+          return (
+            <View key={`line${index}`} style={styles.linePlaceholder}>
+              <ContentLoader />
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
   /**
    * render features
    */
@@ -1755,7 +2309,7 @@ export default function Index({ navigation, route }) {
           </>
         );
       }
-      if (product?.website) {
+      if (product?.website.includes("https")) {
         modelAction = (
           <>
             <SizedBox width={8} />
@@ -1775,6 +2329,20 @@ export default function Index({ navigation, route }) {
             <SizedBox width={8} />
             <IconButton
               onPress={onMap}
+              size="small"
+              style={{ backgroundColor: theme.colors.border + Opacity[60] }}>
+              <Icon name="map-legend" />
+            </IconButton>
+          </>
+        );
+      }
+      if (product?.website2 ==='a' || product?.website2 ==='b' ) {
+        //console.log("teeeeeeeeeeest", product?.location?.longitude)
+        locationAction = (
+          <>
+            <SizedBox width={8} />
+            <IconButton
+              onPress={showRoute2}
               size="small"
               style={{ backgroundColor: theme.colors.border + Opacity[60] }}>
               <Icon name="map-legend" />
@@ -1846,6 +2414,11 @@ export default function Index({ navigation, route }) {
           renderInformation2()
         ) : (
           renderInformation()
+        )}
+        {product?.address && product?.website2==='a' || product?.address && product?.website2==='b' ? (
+          renderInformation3()
+        ) : (
+          <View></View>
         )}
 
         {/* {renderInformation()} */}

@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
   View,
   Image,
-  Text,
+  
   Button,
   Modal,
   Pressable,
@@ -26,6 +26,7 @@ import {
   ProductItem,
   ScreenContainer,
   SizedBox,
+  Text,
 } from '@components';
 import { Styles, Images } from '@configs';
 import { listingActions } from '@actions';
@@ -350,7 +351,7 @@ export default function Index({ navigation, route }) {
             showsUserLocation={true}
             customMapStyle={customStyle}
             zoomEnabled={true}
-            zoomControlEnabled={true}
+            zoomControlEnabled={false}
             initialRegion={{
               latitude: 39.2087931411,
               longitude: 26.2549348658,
@@ -511,7 +512,9 @@ export default function Index({ navigation, route }) {
               </View>
             </ScrollView>
           </Modal>
-          <Modal style={styles.rowContent} visible={isModalVisible2} animationType="slide" >
+          <Modal style={styles.rowContent} visible={isModalVisible2} animationType="slide" onRequestClose={() => {
+                    closeModal2()
+                  }} >
             <Pressable
               style={[styles.button]}
               onPress={closeModal2}>
@@ -641,7 +644,7 @@ export default function Index({ navigation, route }) {
             />
           )}
           <Text style={{ color: 'black' }} typography="title" weight="bold">
-            {index += 1}.
+            {index += 1}. 
             {item.properties.Name}
           </Text>
         </View>

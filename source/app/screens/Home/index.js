@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import { RefreshControl, useWindowDimensions, View, Image, Text, Animated as Animated2, Modal, BackHandler } from 'react-native';
+import { RefreshControl, useWindowDimensions, View, Image, Animated as Animated2, Modal, BackHandler } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedScrollHandler,
@@ -18,7 +18,8 @@ import {
   SearchPicker,
   SizedBox,
   ScreenContainer,
-  Button
+  Button,
+  Text
 } from '@components';
 import { WebView } from 'react-native-webview';
 import { Styles, Images } from '@configs';

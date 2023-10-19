@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   carouselContent: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 50,
     width: '100%',
     flexDirection: 'column',
     alignItems: 'flex-end',

@@ -96,7 +96,7 @@ export default function Index({navigation, route}) {
         }}>
         {location && <Marker pinColor='orange' coordinate={location} />}
       </MapView>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={onCurrentLocation}
         style={[
           styles.locationIcon,
@@ -106,7 +106,7 @@ export default function Index({navigation, route}) {
           },
         ]}>
         <Icon name="map-marker" color={theme.colors.primary} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </ScreenContainer>
   );
 }
