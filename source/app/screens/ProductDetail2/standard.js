@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
   View,
   Image,
-  
+
   Button,
   Modal,
   Pressable,
@@ -362,12 +362,12 @@ export default function Index({ navigation, route }) {
             {geoJsonData &&
               geoJsonData.features.map((feature, index) => (
                 <Marker
-                 key={index}
+                  key={index}
                   coordinate={{
                     latitude: feature.geometry.coordinates[1],
                     longitude: feature.geometry.coordinates[0],
                   }}
-                  onPress={() => { ; sliderRef.current.snapToItem(index);console.log(index) }}
+                  onPress={() => { ; sliderRef.current.snapToItem(index); console.log(index) }}
                 //onPress={() => onMarkerPress(feature)}
                 //number={index = index + 1}
                 >
@@ -460,9 +460,9 @@ export default function Index({ navigation, route }) {
             />
           </View>
           {/* Modal */}
-          <Modal style={styles.rowContent} visible={isModalVisible} animationType="slide"onRequestClose={() => {
-                    closeModal()
-                  }} >
+          <Modal style={styles.rowContent} visible={isModalVisible} animationType="slide" onRequestClose={() => {
+            closeModal()
+          }} >
             <Pressable
               style={[styles.button]}
               onPress={closeModal}>
@@ -513,8 +513,8 @@ export default function Index({ navigation, route }) {
             </ScrollView>
           </Modal>
           <Modal style={styles.rowContent} visible={isModalVisible2} animationType="slide" onRequestClose={() => {
-                    closeModal2()
-                  }} >
+            closeModal2()
+          }} >
             <Pressable
               style={[styles.button]}
               onPress={closeModal2}>
@@ -639,12 +639,13 @@ export default function Index({ navigation, route }) {
               style={{
                 width: width * 0.88, // Set width to itemWidth for full width
                 height: (width / width) * 110, // Calculate height to maintain aspect ratio
+                borderRadius: 10
               }}
               resizeMode='cover'
             />
           )}
           <Text style={{ color: 'black' }} typography="title" weight="bold">
-            {index += 1}. 
+            {index += 1}.
             {item.properties.Name}
           </Text>
         </View>

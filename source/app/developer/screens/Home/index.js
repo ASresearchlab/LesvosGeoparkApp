@@ -163,7 +163,7 @@ export default function Home({navigation}) {
           return (
             <View style={Styles.nativeLeftButton}>
               <IconButton onPress={() => Navigator.pop()} size="small">
-                <Icon name="arrow-back-ios" type="MaterialIcons" />
+                {/* <Icon name="arrow-back-ios" type="MaterialIcons" /> */}
               </IconButton>
             </View>
           );

@@ -349,7 +349,7 @@ export default function Index({ navigation, route }) {
           >
             {geoJsonData && (
               <Geojson geojson={geoJsonData}
-              strokeColor={website2 === 'b' ? 'blue' : 'red'}
+                strokeColor={website2 === 'b' ? 'blue' : 'red'}
                 fillColor="rgba(255,0,0,0)" // Set the fill color
                 strokeWidth={2} // Set the stroke width
               />

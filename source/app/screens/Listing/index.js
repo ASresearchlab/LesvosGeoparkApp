@@ -45,17 +45,15 @@ export default function Index({ navigation, route }) {
   const sliderRef = useRef();
   const filter = useRef(FilterModel.fromSettings(setting)).current;
   const defaultDelta = { latitudeDelta: 0.0922, longitudeDelta: 0.0421 };
-
+  const defaultDelta2 = { latitudeDelta: 0.9, longitudeDelta: 0.9 };
   const [refreshing, setRefreshing] = useState(false);
   const [pageStyle, setPageStyle] = useState('listing');
   const [modeView, setModeView] = useState('grid');
   const [sort, setSort] = useState(filter.sort);
+  const [geoJsonData, setGeoJsonData] = useState(null);
+  const [geoJsonData2, setGeoJsonData2] = useState(null);
 
   useEffect(() => {
-    //const itemloc = listing.data?.[0]?.location;
-    // if (itemloc.latitude === 26.62355194 ) {
-    //   setPageStyle(pageStyle === 'listing');
-    // }
     if (route.params?.item) {
       filter.setCategory = route.params?.item;
     }
@@ -63,6 +61,32 @@ export default function Index({ navigation, route }) {
     return () => dispatch(listingActions.onReset());
   }, [dispatch, filter, route.params]);
 
+  //zep retriece
+  useEffect(() => {
+    const geoJsonUrl = 'https://lesvosgeopark.aegeansolutions.com/wp-content/uploads/2023/07/zep.geojson'
+
+    fetch(geoJsonUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setGeoJsonData(data); // Store the fetched GeoJSON data in the state
+      })
+      .catch((error) => {
+        console.error('Error fetching GeoJSON:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const geoJsonUrl2 = 'https://lesvosgeopark.aegeansolutions.com/wp-content/uploads/2023/07/zks.geojson'
+
+    fetch(geoJsonUrl2)
+      .then((response) => response.json())
+      .then((data) => {
+        setGeoJsonData2(data); // Store the fetched GeoJSON data in the state
+      })
+      .catch((error) => {
+        console.error('Error fetching GeoJSON:', error);
+      });
+  }, []);
   /**
    * on refresh
    */
@@ -81,7 +105,7 @@ export default function Index({ navigation, route }) {
   const onCurrentLocation = async () => {
     const result = await getCurrentLocation();
     if (result) {
-      mapRef.current?.animateToRegion({ ...result, ...defaultDelta }, 500);
+      mapRef.current?.animateToRegion({ ...result, ...defaultDelta2 }, 500);
     }
   };
 
@@ -257,9 +281,9 @@ export default function Index({ navigation, route }) {
       const geo = 'https://www.discoveramari.gr/wp-content/diadromes/Tracks.json'
 
       const initLocation = listing.data?.[0]?.location;
-      console.log(initLocation)
+      //console.log(initLocation)
       // console.log(initLocation.longitude)
-      
+
       return (
         <>
           <MapView
@@ -279,22 +303,77 @@ export default function Index({ navigation, route }) {
             showsUserLocation={true}
             zoomControlEnabled={false}
             initialRegion={{
-              latitude: 35.246374,
-              longitude: 24.570199,
-              ...defaultDelta,
-              ...initLocation,
+              // latitude: 35.246374,
+              // longitude: 24.570199,
+              // ...defaultDelta,
+              // ...initLocation,
+              latitude: 39.2087931411,
+              longitude: 26.2549348658,
+              latitudeDelta: 0.9,
+              longitudeDelta: 0.9,
             }}>
+            {console.log(listing.data?.[0]?.location)}
+            {listing.data?.[0]?.location.longitude === 26.25604 && (
+              <Geojson geojson={geoJsonData}
+                strokeColor='red'
+                fillColor="rgba(255,0,0,0)" // Set the fill color
+                strokeWidth={2} // Set the stroke width
+              />
+            )}
+            {listing.data?.[0]?.location.longitude === 25.95873 && (
+              <Geojson geojson={geoJsonData2}
+                strokeColor='blue'
+                fillColor="rgba(255,0,0,0)" // Set the fill color
+                strokeWidth={2} // Set the stroke width
+              />
+            )}
             {/* <Geojson 
-                geojson={myplace}
+                geojson={geoJsonData}
                 strokeColor="#9ea192"
                 fillColor="green"
                 strokeWidth={4}
             />    */}
             {listing.data?.map?.((item, index) => {
+              //console.log(item.location);
+              if (item.location.longitude === 26.25604) {
+                <Geojson
+                  geojson={geoJsonData}
+                  strokeColor="#9ea192"
+                  fillColor="green"
+                  strokeWidth={4}
+                />
+                mapRef.current?.animateToRegion(
+                  {
+                    latitude: 35.246374,
+                    longitude: 24.570199,
+                    // ...other region properties
+                  },
+                  500 // 500 milliseconds animation duration
+                );
+              }
+              else if (item.location.longitude === 26.62355194) {
+                <Geojson
+                  geojson={geoJsonData}
+                  strokeColor='blue'
+                  fillColor="rgba(255,0,0,0)" // Set the fill color
+                  strokeWidth={0} // Set the stroke width
+                />
+                mapRef.current?.animateToRegion(
+                  {
+                    latitude: 35.246374,
+                    longitude: 24.570199,
+                    // ...other region properties
+                  },
+                  500 // 500 milliseconds animation duration
+                );
+
+              }
+              else {
                 // console.log(item?.location.longitude);
                 return <Marker onPress={() => { ; sliderRef.current.snapToItem(index); }} key={item?.id} coordinate={item.location} pinColor='orange'>
                   {/* <Image source={{uri: listing.data[1]?.category?.iconcategory}} style={{width:50,height:50}} resizeMode='contain' key="maps"/> */}
                 </Marker>;
+              }
             })}
           </MapView>
           <View style={styles.carouselContent}>
