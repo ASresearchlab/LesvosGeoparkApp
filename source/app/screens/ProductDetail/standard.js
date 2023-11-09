@@ -1297,7 +1297,7 @@ export default function Index({ navigation, route }) {
           </Text>
 
           <View style={{ bottom: 0, width: 150, marginLeft: 'auto', marginRight: 'auto', paddingTop: 30 }}>
-            <Button onPress={showRoute}>Εκκίνηση</Button>
+            <Button onPress={showRoute}>{t('Εκκίνηση')}</Button>
           </View>
           {/*{product?.attachments?.length > 0 && (
             <>

@@ -12,18 +12,18 @@ import {
   BottomSheetFlatList,
   BottomSheetModal,
 } from '@gorhom/bottom-sheet';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TouchableOpacity, View} from 'react-native';
-import {useTranslation} from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { TouchableOpacity, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import {Application, Icon, Image, SearchInput, Text} from '@components';
-import {Images, Opacity, Styles} from '@configs';
+import { Application, Icon, Image, SearchInput, Text } from '@components';
+import { Images, Opacity, Styles } from '@configs';
 import styles from './styles';
 
 /**
  * Search Input
  */
-const Input = memo(({value, onChangeText}) => {
+const Input = memo(({ value, onChangeText }) => {
   const [keyword, setKeyword] = useState(value);
   return (
     <SearchInput
@@ -42,7 +42,7 @@ const Input = memo(({value, onChangeText}) => {
  */
 const List = memo(
   forwardRef((props, ref) => {
-    const {theme} = useContext(Application);
+    const { theme } = useContext(Application);
     const [list, setList] = useState(props.data);
     const [selected, setSelected] = useState(props.selected);
 
@@ -66,7 +66,7 @@ const List = memo(
      * @param {*} {item}
      * @return {*}
      */
-    const renderItem = ({item}) => {
+    const renderItem = ({ item }) => {
       let style = {};
       let trailing;
       if (selected?.value && item.value === selected?.value) {
@@ -112,14 +112,14 @@ const List = memo(
 
 const Index = forwardRef((props, ref) => {
   const insets = useSafeAreaInsets();
-  const {theme} = useContext(Application);
+  const { theme } = useContext(Application);
   const bottomSheetRef = useRef();
   const listRef = useRef();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   useImperativeHandle(ref, () => bottomSheetRef.current);
 
-  const {search, title, data, initHeight, selected, onSelect} = props;
+  const { search, title, data, initHeight, selected, onSelect } = props;
 
   const snapPoints = useMemo(() => [initHeight, '100%'], [initHeight]);
 
@@ -143,17 +143,17 @@ const Index = forwardRef((props, ref) => {
         <View
           style={[
             styles.handle,
-            {backgroundColor: theme.colors.card, marginTop: insets.top + 12},
+            { backgroundColor: theme.colors.card, marginTop: insets.top + 12 },
           ]}>
           <View style={styles.indicatorContainer}>
             <View
-              style={[styles.indicator, {backgroundColor: theme.colors.card}]}
+              style={[styles.indicator, { backgroundColor: theme.colors.card }]}
             />
           </View>
           <View
             style={[
               styles.contentTitle,
-              {borderBottomColor: theme.colors.border},
+              { borderBottomColor: theme.colors.border },
             ]}>
             <TouchableOpacity onPress={() => bottomSheetRef.current?.dismiss()}>
               <Text typography="title" weight="bold" style={styles.textButton}>
@@ -163,6 +163,25 @@ const Index = forwardRef((props, ref) => {
             <Text typography="h4" weight="bold" style={styles.titleText}>
               {title}
             </Text>
+            {/* <TouchableOpacity
+              onPress={() => {
+                if (listRef.current?.selected) {
+                  //Des main.js const lang* reload efarmoghs gia na allaksei i metavlhth;
+                  onSelect(listRef.current?.selected);
+                  bottomSheetRef.current?.dismiss();
+                  setTimeout(() => {
+                    RNRestart.Restart();
+                  }, 1000);
+                }
+              }}>
+              <Text
+                typography="title"
+                weight="bold"
+                color="primary"
+                style={styles.textButton}>
+                {t('save')}
+              </Text>
+            </TouchableOpacity> */}
             <TouchableOpacity
               onPress={() => {
                 if (listRef.current?.selected) {
@@ -194,7 +213,7 @@ const Index = forwardRef((props, ref) => {
         />
       )}
       enablePanDownToClose={true}>
-      <View style={[Styles.flex, {backgroundColor: theme.colors.card}]}>
+      <View style={[Styles.flex, { backgroundColor: theme.colors.card }]}>
         <List ref={listRef} data={data} selected={selected} />
       </View>
     </BottomSheetModal>
@@ -227,7 +246,7 @@ Index.defaultProps = {
   ],
   initHeight: '50%',
   selected: null,
-  onSelect: () => {},
+  onSelect: () => { },
 };
 
 export default Index;

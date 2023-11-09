@@ -2,7 +2,7 @@ import {all, put, call, takeEvery, select} from 'redux-saga/effects';
 import {actionTypes} from '@actions';
 import api from '@api';
 import {CategoryModel, ProductModel} from '@models';
-import {settingSelect} from '@selectors';
+import {settingSelect,languageSelect} from '@selectors';
 
 /**
  * on handle load discovery list
@@ -11,8 +11,15 @@ import {settingSelect} from '@selectors';
  */
 function* onLoad(action) {
   try {
+    const language = yield select(languageSelect);
+    const filter = {
+      wpml_language: action.filter?.lang ?? language, // add wpml_language here
+    };
+    console.log('wpml_language:', filter.wpml_language);
+    
     const setting = yield select(settingSelect);
-    const response = yield call(api.getDiscovery);
+    const response = yield call(api.getDiscovery,filter);
+     
     if (response.success) {
       const data = response.data.map(item => {
         return {
@@ -34,7 +41,9 @@ function* onLoad(action) {
       message: error.message,
     });
   }
+ 
 }
+
 
 function* watchLoad() {
   yield takeEvery(actionTypes.LOAD_DISCOVERY, onLoad);

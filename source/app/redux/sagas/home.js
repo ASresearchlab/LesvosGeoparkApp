@@ -2,7 +2,7 @@ import {all, call, put, select, takeEvery} from 'redux-saga/effects';
 import {actionTypes} from '@actions';
 import api from '@api';
 import {CategoryModel, ProductModel} from '@models';
-import {homeSelect, settingSelect} from '@selectors';
+import {homeSelect, settingSelect, languageSelect} from '@selectors';
 /**
  * on handle load home
  * @param action
@@ -10,9 +10,12 @@ import {homeSelect, settingSelect} from '@selectors';
  */
 function* onLoad(action) {
   try {
+    const language = yield select(languageSelect);
     const setting = yield select(settingSelect);
     const response = yield call(api.getHome);
-    const params = {category: [132]};
+    const params = {category: [132],
+      wpml_language: action.filter?.lang ?? language,
+    };
     const top10 = yield call(api.getListing, {
       ...params,
     });

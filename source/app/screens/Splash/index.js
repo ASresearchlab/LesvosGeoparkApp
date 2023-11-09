@@ -28,7 +28,7 @@ export default function Splash({ navigation }) {
     <View style={styles.container}>
     <View style={{alignItems: 'center'}}>
       <Image source={Images.logo} style={styles.logo} resizeMode="contain" />
-      <Text  style={{marginTop: 8, fontSize: 24}}>
+      <Text  style={{marginTop: 8, fontSize: 24,color:"#000"}}>
         {Setting.name}
       </Text>
       <Text style={{marginTop: 20,fontSize:18,color:'#000',fontWeight:'bold',textAlign:'center',paddingHorizontal:10}}>

@@ -97,13 +97,13 @@ export default function Index({ navigation, route }) {
   }, []);
 
 
-  useEffect(() => {
-    if (route.params?.item) {
-      filter.setCategory = route.params?.item;
-    }
-    dispatch(listingActions.onLoad({ filter }));
-    return () => dispatch(listingActions.onReset());
-  }, [dispatch, filter, route.params]);
+  // useEffect(() => {
+  //   if (route.params?.item) {
+  //     filter.setCategory = route.params?.item;
+  //   }
+  //   dispatch(listingActions.onLoad({ filter }));
+  //   return () => dispatch(listingActions.onReset());
+  // }, [dispatch, filter, route.params]);
 
   /**
    * on refresh

@@ -56,14 +56,14 @@ export default function Index({ navigation, route }) {
   const [pageStyle, setPageStyle] = useState('map');
   const [modeView, setModeView] = useState('grid');
   const [sort, setSort] = useState(filter.sort);
-  const [origin, setOrigin] = useState(null);
-  const [destination, setDestination] = useState(null);
-  const MAP_API_KEY = 'AIzaSyDsyKauf-1xG9g4hoL4OSfx1h-yI0s0Kq4';
+  // const [origin, setOrigin] = useState(null);
+  // const [destination, setDestination] = useState(null);
+  // const MAP_API_KEY = 'AIzaSyDsyKauf-1xG9g4hoL4OSfx1h-yI0s0Kq4';
   const [geoJsonData, setGeoJsonData] = useState(null);
   const [geoJsonData2, setGeoJsonData2] = useState([]);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [isModalVisible2, setModalVisible2] = useState(false);
-  const [selectedFeature, setSelectedFeature] = useState(null);
+  // const [isModalVisible, setModalVisible] = useState(false);
+  // const [isModalVisible2, setModalVisible2] = useState(false);
+  // const [selectedFeature, setSelectedFeature] = useState(null);
   const product = route.params?.item;
   const { item } = route.params;
   const website2 = item?.website2;
@@ -85,13 +85,13 @@ export default function Index({ navigation, route }) {
 
 
 
-  useEffect(() => {
-    if (route.params?.item) {
-      filter.setCategory = route.params?.item;
-    }
-    dispatch(listingActions.onLoad({ filter }));
-    return () => dispatch(listingActions.onReset());
-  }, [dispatch, filter, route.params]);
+  // useEffect(() => {
+  //   if (route.params?.item) {
+  //     filter.setCategory = route.params?.item;
+  //   }
+  //   dispatch(listingActions.onLoad({ filter }));
+  //   return () => dispatch(listingActions.onReset());
+  // }, [dispatch, filter, route.params]);
 
   /**
    * on refresh
@@ -177,11 +177,11 @@ export default function Index({ navigation, route }) {
   /**
    * on load more
    */
-  const onMore = () => {
-    if (listing.pagination?.allowMore) {
-      dispatch(listingActions.onLoadMore(filter));
-    }
-  };
+  // const onMore = () => {
+  //   if (listing.pagination?.allowMore) {
+  //     dispatch(listingActions.onLoadMore(filter));
+  //   }
+  // };
 
   /**
    * render item list

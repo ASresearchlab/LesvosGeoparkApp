@@ -85,12 +85,21 @@ export default function Discovery({navigation}) {
    * @returns {JSX.Element}
    */
   const renderItem = ({item}) => {
-    if (item.category.title !== 'Γεωπάρκο της Λέσβου' && item.category.title !== 'Δράσεις Γεωπάρκου' && item.category.title !== 'Διαδρομές'&& item.category.title !== 'top10' ) {
-    return (
-      <>
-        <View style={styles.item}>
-          <View style={Styles.row}>
-             {/* <View
+    if (
+      item.category.title !== 'Γεωπάρκο της Λέσβου' &&
+      item.category.title !== 'Δράσεις Γεωπάρκου' &&
+      item.category.title !== 'Διαδρομές' &&
+      item.category.title !== 'top10' &&
+      item.category.title !== 'Geopark of Lesvos' &&
+      item.category.title !== 'Geopark Actions' &&
+      item.category.title !== 'Routes' &&
+      item.category.title !== 'top10en'
+    ) {
+      return (
+        <>
+          <View style={styles.item}>
+            <View style={Styles.row}>
+              {/* <View
               style={[
                 styles.iconContainer,
                 {
@@ -104,36 +113,41 @@ export default function Discovery({navigation}) {
                 type="FontAwesome5"
               />
             </View>  */}
-            <Image source={{uri: item?.category?.image?.thumb}} style={{width:40,height:40,borderRadius:10}} resizeMode='contain'/>
-            <View style={Styles.paddingHorizontal8}>
-              <Text typography="title" weight="bold">
-                {item.category?.title}
-              </Text>
-              <SizedBox height={4} />
-              {/* <Text typography="caption" type="secondary">
+              <Image
+                source={{ uri: item?.category?.image?.thumb }}
+                style={{ width: 40, height: 40, borderRadius: 10 }}
+                resizeMode='contain'
+              />
+              <View style={Styles.paddingHorizontal8}>
+                <Text typography="title" weight="bold">
+                  {item.category?.title}
+                </Text>
+                <SizedBox height={4} />
+                {/* <Text typography="caption" type="secondary">
                 {item.category?.count} {t('location')}
               </Text> */}
+              </View>
             </View>
+            <TouchableOpacity
+              style={Styles.padding4}
+              onPress={() => onPressCategoryList(item)}>
+              <Text typography="caption" color="secondary">
+                {t('see_more')}
+              </Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={Styles.padding4}
-            onPress={() => onPressCategoryList(item)}>
-            <Text typography="caption" color="secondary">
-              {t('see_more')}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          contentContainerStyle={Styles.padding8}
-          data={item.list}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          renderItem={renderProduct}
-          keyExtractor={(i, index) => `${i?.id}${index}`}
-        />
-      </>
-    );
-            }
+          <FlatList
+            contentContainerStyle={Styles.padding8}
+            data={item.list}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            renderItem={renderProduct}
+            keyExtractor={(i, index) => `${i?.id}${index}`}
+          />
+        </>
+      );
+    }
+    
   };
 
   /**

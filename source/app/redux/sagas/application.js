@@ -13,7 +13,7 @@ import {isValidURL} from '@utils';
  * @returns {Generator<*, void, *>}
  */
 function* onStartApplication(action) {
-  const domain = yield select(domainSelect);
+  const domain =  select(domainSelect);
   //const onboard = yield select(onboardSelect);
   yield all([
     //yield put({type: actionTypes.SYNC_DEVICE_INFO}),

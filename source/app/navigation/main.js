@@ -1,29 +1,31 @@
-import React, {useContext, useEffect, useRef} from 'react';
-import {Linking, Pressable, StyleSheet} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, { useContext, useEffect, useRef } from 'react';
+import { Linking, Pressable, StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import messaging from '@react-native-firebase/messaging';
-import {useTranslation} from 'react-i18next';
-import {Account, CategoryList, Discovery, Empty, Home, WishList, Feedback, Listing, Visit,Activities, TestPage, Routes, Setting} from '@screens';
-import {Application, getFontFamily, Icon, Text} from '@components';
-import {Styles} from '@configs';
+import { useTranslation } from 'react-i18next';
+import { Account, CategoryList, Discovery, Empty, Home, WishList, Feedback, Listing, Visit, Activities, TestPage, Routes, Setting } from '@screens';
+import { Application, getFontFamily, Icon, Text } from '@components';
+import { Styles } from '@configs';
 import Navigator from '@navigator';
-import {useSelector} from 'react-redux';
-import {settingSelect} from '@selectors';
-import {DeeplinkModel, NotificationModel} from '@models';
+import { useSelector } from 'react-redux';
+import { settingSelect } from '@selectors';
+//import { languageSelect } from '@selectors';
+import { DeeplinkModel, NotificationModel } from '@models';
 
 const Tab = createBottomTabNavigator();
 
 export default function Main() {
   const settings = useSelector(settingSelect);
-  const {theme, font} = useContext(Application);
-  const {t} = useTranslation();
+  //const lang = useSelector(languageSelect);
+  const { theme, font } = useContext(Application);
+  const { t } = useTranslation();
   const debounceDeepLink = useRef();
 
   useEffect(() => {
     const linkingSubscription = Linking.addEventListener('url', handleDeepLink);
     Linking.getInitialURL()
       .then(handleDeepLink)
-      .catch(error => {});
+      .catch(error => { });
     messaging().onNotificationOpenedApp(handleNotification);
     messaging().getInitialNotification().then(handleNotification);
     return () => {
@@ -42,9 +44,9 @@ export default function Main() {
         const deeplink = DeeplinkModel.fromString(data?.url ?? data);
         if (deeplink && deeplink.target) {
           if (deeplink.authentication) {
-            Navigator.navigateAuth(deeplink.target, {item: deeplink.item});
+            Navigator.navigateAuth(deeplink.target, { item: deeplink.item });
           } else {
-            Navigator.navigate(deeplink.target, {item: deeplink.item});
+            Navigator.navigate(deeplink.target, { item: deeplink.item });
           }
         }
       }, 250);
@@ -58,9 +60,9 @@ export default function Main() {
     const notification = NotificationModel.fromJson(item?.data);
     if (notification && notification.target) {
       if (notification.authentication) {
-        Navigator.navigateAuth(notification.target, {item: notification.item});
+        Navigator.navigateAuth(notification.target, { item: notification.item });
       } else {
-        Navigator.navigate(notification.target, {item: notification.item});
+        Navigator.navigate(notification.target, { item: notification.item });
       }
     }
   };
@@ -85,17 +87,17 @@ export default function Main() {
         },
         tabBarLabelStyle: {
           fontSize: 10,
-          fontFamily: getFontFamily({fontFamily: font}), marginBottom:10, 
-          width:200
+          fontFamily: getFontFamily({ fontFamily: font }), marginBottom: 10,
+          width: 200
         },
-        
+
       }}>
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
           title: t('home'),
-          tabBarIcon: ({color}) => {
+          tabBarIcon: ({ color }) => {
             return <Icon color={color} name="home-outline" />;
           },
         }}
@@ -124,20 +126,22 @@ export default function Main() {
           ),
         }}
       /> */}
-<Tab.Screen
+      <Tab.Screen
         name={t('interests_points')}
         component={Discovery}
         options={{
-          headerShown:false,
+          headerShown: false,
           headerTitleAlign: 'center',
           tabBarLabel: ({ focused }) => (
             <Text
               numberOfLines={2} // Set the number of lines to allow wrapping
-              style={{ textAlign: 'center',fontSize: 10,color: focused ? theme.colors.secondary : theme.colors.primary,
-              fontFamily: getFontFamily({fontFamily: font}),marginBottom:-1,  }}
+              style={{
+                textAlign: 'center', fontSize: 10, color: focused ? theme.colors.secondary : theme.colors.primary,
+                fontFamily: getFontFamily({ fontFamily: font }), marginBottom: -1,
+              }}
 
             >
-            {t('interest_points')}
+              {t('interest_points')}
             </Text>
           ),
           tabBarIcon: ({ color }) => (
@@ -145,22 +149,51 @@ export default function Main() {
           ),
         }}
       />
-<Tab.Screen
+      {/* <Tab.Screen
+        name="Routes"
+        component={TestPage}
+        initialParams={{
+          item: (() => {
+            switch (lang) {
+              case 'en':
+                return {id:118,type:'category',title:t('routes')};
+              case 'el':
+                return { id: 109, type: 'category', title: t('activities') };
+              default:
+                return { id: 109, type: 'category', title: t('activities') }; // Default case
+            }
+          })(),
+        }}
+        options={{
+          headerShown: true,
+          headerTitleAlign: 'center',
+          title: t('routes'),
+          tabBarIcon: ({color}) => {
+            return <Icon color={color} name="routes" />;
+          },
+          // tabBarButton: props => (
+          //   <Pressable {...props} onPress={() => onAuthNavigate('WishList')} />
+          // ),
+        }}
+      /> */}
+      <Tab.Screen
         name="Listing"
         component={TestPage}
-        initialParams={{item:{id:109,type:'category',title:t('Δράσεις Γεωπάρκου')}} }     
-        options={{          
-             
+        initialParams={{ item: { id: 109, type: 'category', title: t('activities') } }}
+        options={{
+
           headerTitleAlign: 'center',
           headerShown: 'true',
           tabBarLabel: ({ focused }) => (
             <Text
               numberOfLines={2} // Set the number of lines to allow wrapping
-              style={{ textAlign: 'center',fontSize: 10,color: focused ? theme.colors.secondary : theme.colors.primary,
-              fontFamily: getFontFamily({fontFamily: font}),marginBottom:-1,  }}
+              style={{
+                textAlign: 'center', fontSize: 10, color: focused ? theme.colors.secondary : theme.colors.primary,
+                fontFamily: getFontFamily({ fontFamily: font }), marginBottom: -1,
+              }}
 
             >
-            {t('Δράσεις Γεωπάρκου')}
+              {t('activities')}
             </Text>
           ),
           tabBarIcon: ({ color }) => (
@@ -191,13 +224,13 @@ export default function Main() {
       /> */}
       <Tab.Screen
         name="Routes"
-        component={Routes}
-        initialParams={{item:{id:118,type:'category',title:t('routes')}}}
+        component={TestPage}
+        initialParams={{ item: { id: 118, type: 'category', title: t('routes') } }}
         options={{
           headerShown: true,
           headerTitleAlign: 'center',
           title: t('routes'),
-          tabBarIcon: ({color}) => {
+          tabBarIcon: ({ color }) => {
             return <Icon color={color} name="routes" />;
           },
           // tabBarButton: props => (
@@ -206,7 +239,7 @@ export default function Main() {
         }}
       />
 
-      
+
 
       {/* {settings?.enableSubmit && (
         <Tab.Screen
@@ -222,10 +255,10 @@ export default function Main() {
           }}
         />
       )} */}
-      
-     
 
-     {/* <Tab.Screen
+
+
+      {/* <Tab.Screen
         name="map"
         component={Feedback}
         options={{
@@ -241,7 +274,7 @@ export default function Main() {
         }}
       /> */}
 
-      
+
       {/* <Tab.Screen
         name="Edu"
         component={WishList}
@@ -257,7 +290,7 @@ export default function Main() {
           // ),
         }}
       /> */}
-      
+
       {/* <Tab.Screen
         name="News"
         component={WishList}
@@ -291,7 +324,7 @@ export default function Main() {
       />
        */}
 
-    
+
 
       {/* <Tab.Screen
         name="Account"
@@ -318,7 +351,7 @@ export default function Main() {
           headerShown: true,
           headerTitleAlign: 'center',
           title: t('language'),
-          tabBarIcon: ({color}) => {
+          tabBarIcon: ({ color }) => {
             return <Icon color={color} name="web" />;
           },
           // tabBarButton: props => (
@@ -327,7 +360,7 @@ export default function Main() {
         }}
       />
     </Tab.Navigator>
-    
+
   );
 }
 

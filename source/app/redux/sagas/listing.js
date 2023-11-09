@@ -2,7 +2,7 @@ import {all, call, debounce, put, select, takeEvery} from 'redux-saga/effects';
 import {actionTypes} from '@actions';
 import api from '@api';
 import {PaginationModel, ProductModel, SubmitSettingModel} from '@models';
-import {listingSelect, settingSelect} from '@selectors';
+import {listingSelect, settingSelect, languageSelect} from '@selectors';
 import {getCurrentLocation} from '@utils';
 
 /**
@@ -13,16 +13,19 @@ import {getCurrentLocation} from '@utils';
 function* onLoad(action) {
   try {
     let params = {};
+
     if (action.params?.filter) {
       params = yield action.params.filter.getParams();
     }
     const setting = yield select(settingSelect);
+    const language = yield select(languageSelect);
     const response = yield call(
       api.getListing,
       {
         page: 1,
         per_page: setting.perPage,
         ...params,
+        wpml_language: action.filter?.lang ?? language,
       },
       action.params?.loading,
     );

@@ -60,24 +60,24 @@ export default function Index({navigation, route}) {
     navigation.goBack();
   };
 
-  if (editable) {
-    options = {
-      headerRight: () => {
-        return (
-          <View style={Styles.nativeRightButton}>
-            <Button
-              onPress={onApply}
-              type="text"
-              size="small"
-              full={false}
-              textStyle={{color: theme.colors.primary}}>
-              {t('apply')}
-            </Button>
-          </View>
-        );
-      },
-    };
-  }
+  // if (editable) {
+  //   options = {
+  //     headerRight: () => {
+  //       return (
+  //         <View style={Styles.nativeRightButton}>
+  //           <Button
+  //             onPress={onApply}
+  //             type="text"
+  //             size="small"
+  //             full={false}
+  //             textStyle={{color: theme.colors.primary}}>
+  //             {t('apply')}
+  //           </Button>
+  //         </View>
+  //       );
+  //     },
+  //   };
+  // }
 
   return (
     <ScreenContainer navigation={navigation} options={options}>

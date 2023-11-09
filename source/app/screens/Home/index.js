@@ -30,8 +30,11 @@ import Locations from './components/location';
 import Recent from './components/recent';
 import styles from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
 export default function Home({ navigation }) {
+  const {t, i18n} = useTranslation();
+  const [lang, setlang] = useState(i18n.language);
   const [showWebView, setShowWebView] = useState(false);
   const [url, setUrl] = useState('');
   const fadeAnim = useRef(new Animated2.Value(0)).current;
@@ -39,9 +42,9 @@ export default function Home({ navigation }) {
   const { height: heightDevice } = useWindowDimensions();
   const bannerHeight = heightDevice * 0.3;
   const { theme } = useContext(Application);
-  const { t } = useTranslation();
   const home = useSelector(homeSelect);
   const translationY = useSharedValue(0);
+  
 
   const scrollHandler = useAnimatedScrollHandler(
     ({ layoutMeasurement, contentOffset, contentSize }) => {
@@ -57,6 +60,18 @@ export default function Home({ navigation }) {
   /**
    * on refresh
    */
+  useFocusEffect(
+    React.useCallback(() => {
+      if (lang != i18n.language) {
+        setlang(i18n.language);
+        dispatch(
+          homeActions.onLoad({lang: i18n.language}, () => {
+            console.log('egine');
+          }),
+        );
+      }
+    }, [dispatch, lang]),
+  );
   const onRefresh = async () => {
     setRefreshing(true);
     dispatch(
@@ -246,7 +261,8 @@ export default function Home({ navigation }) {
                     onPress={() => openWebView('https://www.lesvosmuseum.gr/e-shop/tickets')}
                   >
                     <Text style={{ backgroundColor: '#FFE177', color: 'black', padding: 5, borderRadius: 5, fontSize: 18, fontFamily: 'Arial' }}>
-                      ΕΙΣΙΤΗΡΙΑ</Text>
+
+                      {t('tickets')}</Text>
                   </TouchableOpacity>
                 </View>
               )}
