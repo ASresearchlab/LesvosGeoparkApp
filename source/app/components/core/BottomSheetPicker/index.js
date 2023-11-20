@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import { Application, Icon, Image, SearchInput, Text } from '@components';
 import { Images, Opacity, Styles } from '@configs';
 import styles from './styles';
+import RNRestart from 'react-native-restart';
 
 /**
  * Search Input
@@ -163,7 +164,7 @@ const Index = forwardRef((props, ref) => {
             <Text typography="h4" weight="bold" style={styles.titleText}>
               {title}
             </Text>
-            {/* <TouchableOpacity
+            <TouchableOpacity
               onPress={() => {
                 if (listRef.current?.selected) {
                   //Des main.js const lang* reload efarmoghs gia na allaksei i metavlhth;
@@ -181,8 +182,8 @@ const Index = forwardRef((props, ref) => {
                 style={styles.textButton}>
                 {t('save')}
               </Text>
-            </TouchableOpacity> */}
-            <TouchableOpacity
+            </TouchableOpacity>
+            {/* <TouchableOpacity
               onPress={() => {
                 if (listRef.current?.selected) {
                   onSelect(listRef.current?.selected);
@@ -196,7 +197,7 @@ const Index = forwardRef((props, ref) => {
                 style={styles.textButton}>
                 {t('save')}
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           {search && (
             <View style={styles.searchContent}>
