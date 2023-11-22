@@ -193,7 +193,7 @@ export default function Main() {
               }}
 
             >
-              {t('activities')}
+              {t('activitiess')}
             </Text>
           ),
           tabBarIcon: ({ color }) => (

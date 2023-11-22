@@ -1,7 +1,8 @@
-import {all, call, debounce, takeEvery} from 'redux-saga/effects';
+import {all, call, debounce, takeEvery, select} from 'redux-saga/effects';
 import {actionTypes} from '@actions';
 import api from '@api';
 import {CategoryModel} from '@models';
+import {languageSelect} from '@selectors';
 
 /**
  * on handle load category list
@@ -10,11 +11,19 @@ import {CategoryModel} from '@models';
  */
 function* onLoad(action) {
   try {
-    const params = {};
-   
-    if (action.item) {
-      params.category_id = action.item?.id;
+    let params = {};
+
+    const language = yield select(languageSelect);
+    if (action.filter && action.filter.lang) {
+      params.wpml_language = action.filter.lang;
+    } else {
+      params.wpml_language = language;
     }
+
+    if (action.item) {
+      params.category_id = action.item.id;
+    }
+
     const response = yield call(api.getCategory, params);
     if (response.success) {
       let data = (response.data ?? []).map(item => {
@@ -46,7 +55,20 @@ function* onLoad(action) {
  */
 function* onLoadLocation(action) {
   try {
-    const response = yield call(api.getLocation, {parent_id: action.item?.id});
+    let params = {};
+
+    const language = yield select(languageSelect);
+    if (action.filter && action.filter.lang) {
+      params.wpml_language = action.filter.lang;
+    } else {
+      params.wpml_language = language;
+    }
+
+    if (action.item) {
+      params.parent_id = action.item.id;
+    }
+
+    const response = yield call(api.getLocation, params);
     if (response.success) {
       const data = (response.data ?? []).map(item => {
         return CategoryModel.fromJson(item);

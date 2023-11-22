@@ -6,11 +6,13 @@ import SplashScreen from 'react-native-splash-screen';
 import { Application, Image, SizedBox } from '@components';
 import { applicationActions } from '@actions';
 import styles from './styles'; // Import your stylesheet here
+import { useTranslation } from 'react-i18next';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default function Splash({ navigation }) {
+  const {t, i18n} = useTranslation();
   const { theme } = useContext(Application);
   const dispatch = useDispatch();
 
@@ -32,7 +34,7 @@ export default function Splash({ navigation }) {
         {Setting.name}
       </Text>
       <Text style={{marginTop: 20,fontSize:18,color:'#000',fontWeight:'bold',textAlign:'center',paddingHorizontal:10}}>
-      Δημιουργία-λειτουργία «Ψηφιακών εφαρμογών προβολής των γεω-μνημείων του Γεωπάρκου Λέσβου - Παγκόσμιου Γεωπάρκου UNESCO
+      {t('splash')}
       </Text>
     </View>
     <ActivityIndicator

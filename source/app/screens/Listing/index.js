@@ -313,20 +313,28 @@ export default function Index({ navigation, route }) {
               longitudeDelta: 0.9,
             }}>
             {console.log(listing.data?.[0]?.location)}
-            {listing.data?.[0]?.location.longitude === 26.25604 && (
-              <Geojson geojson={geoJsonData}
-                strokeColor='red'
-                fillColor="rgba(255,0,0,0)" // Set the fill color
-                strokeWidth={2} // Set the stroke width
-              />
-            )}
-            {listing.data?.[0]?.location.longitude === 25.95873 && (
-              <Geojson geojson={geoJsonData2}
-                strokeColor='blue'
-                fillColor="rgba(255,0,0,0)" // Set the fill color
-                strokeWidth={2} // Set the stroke width
-              />
-            )}
+            {(
+              listing.data?.[0]?.location.longitude === 26.25604 ||
+              listing.data?.[0]?.location.longitude === 26.25013
+            ) && (
+                <Geojson
+                  geojson={geoJsonData}
+                  strokeColor='red'
+                  fillColor="rgba(255,0,0,0)" // Set the fill color
+                  strokeWidth={2} // Set the stroke width
+                />
+              )}
+            {(
+              listing.data?.[0]?.location.longitude === 25.95873 ||
+              listing.data?.[0]?.location.longitude === 26.44626
+            ) && (
+                <Geojson
+                  geojson={geoJsonData2}
+                  strokeColor='blue'
+                  fillColor="rgba(255,0,0,0)"
+                  strokeWidth={2}
+                />
+              )}
             {/* <Geojson 
                 geojson={geoJsonData}
                 strokeColor="#9ea192"
